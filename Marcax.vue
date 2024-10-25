@@ -54,8 +54,9 @@ import { useStore } from '../store/store1'
         methods: {
  /* . . . . . . . . . . . . . . . . . . . */
         avaVal(){
-            this.marcasdata=this.marcasdata;
-            console.log(this.marcasdata);
+            this.loadList();
+            this.storex.setDBData(this.marcasdata);
+            console.log(this.storex.dbdata);
 
         },
   /* . . . . . . . . . . . . . . . . . . . */
@@ -106,7 +107,8 @@ searchh(){
               this.marcasdata = response.data;
              // this.datasearch = response.data;
               this.insearch='true';
-              //console.log(this.datasearch);
+                console.log(" - - - -");
+              console.log(this.marcasdata);
           })
           .catch(errors => {
             alert("the resource not found");
@@ -205,6 +207,7 @@ console.log("Enter response");
  /* . . . . . . . . . . . . . . . . . . . */
   loadList() {
     this.insearch='false';
+    this.storex.setDBData([]);
       let config = {
           headers: {
               'Accept': 'application/json',
@@ -215,6 +218,7 @@ console.log("Enter response");
       axios.get(this.urlBase, config)
           .then(response => {
               this.marcasdata = response.data;
+              this.storex.setDBData(response.data);
              
               
           })
@@ -272,11 +276,16 @@ console.log("Enter response");
         },
 /* . . . . . . . . . . . . . . . . . . . */
         mounted() {  /* ___5___ */
+            
             this.loadList();
-            console.log('Marcas data:');
-            console.log(this.marcasdata);
+            this.marcasdata=this.storex.dbdata;
+            console.log('storex data:');
+            console.log(this.storex.dbdata);
 
         }
+        //created(){
+        //    this.loadList();
+       // }
     }
 /* . . . . . . . . . . . . . . . . . . . */
 /* . . . . . . . . . . . . . . . . . . . */
@@ -338,12 +347,13 @@ when they are mounted, an action is executed: in this case: loadList
 
 <card-cp title="Search for brands">
     <template v-slot:content>
-  
+
+ <small> 
 <select v-model="selected">
-  <option value="id" enabled><small>Search by Id</small></option>
-  <option value="name"><small>Search by Name</small></option>
+  <option value="id" enabled>Search by Id</option>
+  <option value="name">Search by Name</option>
 </select>
-    
+    </small>
     <input type="number"  class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-if="selected=='id'" v-model="inpSearchId">
      <input type="text" class="form-control" id="inputname" aria-describedby="nameHelp"
         placeholder="name of brand" v-if="selected=='name'" v-model="inpSearchNome">
@@ -484,9 +494,9 @@ MODAL DELETE
 LIST
 -->
 <!-- = = = = = = = =  =  =[COMPONENT][Card:List]  -->
-<card-cp title="List of brands" @click="avaVal()">
+<card-cp title="List of brands">
 
-    <template slot="content">
+    <template v-slot:content>
      <table-cp :dbdatas="marcasdata"
                :titles="titlesCP"
                :dview="{visible:true, dataTarget:'modalView'}"
@@ -496,7 +506,7 @@ LIST
      ></table-cp>
       </template>
 
-      <template slot="footer">
+      <template v-slot:footer>
       <button type="button" class="btn btn-primary btn-sm float-right"
       onclick="document.getElementById('modalBrandAdd').style.display='block'">Add</button>
 
