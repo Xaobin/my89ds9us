@@ -14,7 +14,7 @@
           <slot name="content"></slot>
       </div> 
     </div>
-    <button type="button" class="btn btn-secondary" @click="vvvNoShow()">Close</button>
+    <button type="button" class="btn btn-secondary" @click="vvvNoShow()">Fechar</button>
      <slot name="footer"></slot>
   </div>
 </div>

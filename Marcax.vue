@@ -111,7 +111,7 @@ searchh(){
               console.log(this.marcasdata);
           })
           .catch(errors => {
-            alert("the resource not found");
+            alert("Não foi localizado");
               console.log(" - - - -");
               console.log(errors.response.data.msg);
           })
@@ -141,18 +141,18 @@ searchh(){
   updateh() {
     this.storex.setStatus('');
     this.storex.setMsg('');
-    this.nomemarca=this.storex.item.nome; 
+    this.nomemarca=this.storex.item.Nome; 
     
     let formData = new FormData();
     formData.append('_method', 'PATCH');
-    formData.append('name', this.nomemarca);
+    formData.append('nome', this.nomemarca);
  
     if(this.fileImage[0]) {
-        formData.append('image', this.fileImage[0]);
+        formData.append('imagem', this.fileImage[0]);
         this.resetValues();
     }
 
-    let url = this.urlBase + '/' + this.storex.item.id
+    let url = this.urlBase + '/' + this.storex.item.ID
 
     let config = {
         headers: {
@@ -189,7 +189,7 @@ console.log("Enter response");
      let formData = new FormData();
      formData.append('_method', 'delete')
 
-     let url = this.urlBase + '/' + this.storex.item.id
+     let url = this.urlBase + '/' + this.storex.item.ID
 
      axios.post(url, formData)
          .then(response => {
@@ -241,8 +241,8 @@ console.log("Enter response");
         console.log(this.nomemarca, this.fileImage[0])
 
         let formData = new FormData();
-        formData.append('name', this.nomemarca)
-        formData.append('image', this.fileImage[0])
+        formData.append('nome', this.nomemarca)
+        formData.append('imagem', this.fileImage[0])
 
         let config = {
             headers: {                    /* ___1___ */
@@ -256,7 +256,7 @@ console.log("Enter response");
          .then(response => {
              this.transactStatus = 'added'      /* ___3___ */
              this.detalhesTransact = {
-                 msg:'Register ID: '+response.data.id
+                 msg:'Registro ID: '+response.data.id
              }
              console.log("\n[add]The response Value: "+JSON.stringify(response))
               this.loadList()
@@ -278,9 +278,9 @@ console.log("Enter response");
         mounted() {  /* ___5___ */
             
             this.loadList();
-            this.marcasdata=this.storex.dbdata;
-            console.log('storex data:');
-            console.log(this.storex.dbdata);
+           // this.marcasdata=this.storex.dbdata;
+           // console.log('storex data:');
+           // console.log(this.storex.dbdata);
 
         }
         //created(){
@@ -345,7 +345,7 @@ when they are mounted, an action is executed: in this case: loadList
  <!-- = = = = = = = =  =  =  = = [COMPONENT][Card:Search] -->
 
 
-<card-cp title="Search for brands">
+<card-cp title="Busca por marcas">
     <template v-slot:content>
 
  <small> 
@@ -370,8 +370,8 @@ when they are mounted, an action is executed: in this case: loadList
  <!-- = = = = = = = =  =  [End of Card:Search] = -->
 
 <!-- = = = = = = = =  =  =[COMPONENT][Modal:Add]-->
-<dmodal-cp modalname="modalBrandAdd" title="Add brand">
-<template slot="alerts"> 
+<dmodal-cp modalname="modalBrandAdd" title="Adicionar marca">
+<template v-slot:alerts> 
 <alert-cp stll="success" :details="detalhesTransact"
 title="Registration done successfully"
 v-if="transactStatus == 'added'"></alert-cp>
@@ -380,27 +380,27 @@ title="Error when trying to register the brand"
 v-if="transactStatus == 'error'"></alert-cp>
 </template>
 
-       <template slot="content"> 
+       <template v-slot:content> 
        <div class="form-group">
-    <input-cp title="name of brand" id="newName" id-help="newNameHelp"
-        text-help="Inform the name of brand">
+    <input-cp title="Nome da marca" id="newName" id-help="newNameHelp"
+        text-help="Informe o nome da marca">
     <input type="text" class="form-control" id="newName" aria-describedby="newNameHelp"
-           placeholder="name of brand" v-model="nomemarca">
+           placeholder="Nome da marca" v-model="nomemarca">
     </input-cp> 
     </div>
 
      <div class="form-group"> <!-- = =[Input:Image] = = -->
     <input-cp title="Image" id="newImage" id-help="newImageHelp"
-    text-help="Select the image in format PNG">
-    <input type="file" class="form-control-file" id="newImage" aria-describedby="newImageHelp" placeholder="Select a Image"
+    text-help="Seleciona a imagem no formato PNG">
+    <input type="file" class="form-control-file" id="newImage" aria-describedby="newImageHelp" placeholder="Selecione a imagem"
     @change="loadImage($event)">
     </input-cp> 
     </div>
     </template>
 
-      <template slot="footer">
+      <template v-slot:footer>
         <button type="button" class="btn btn-primary"
-        @click="saveh()">save</button>
+        @click="saveh()">Salvar</button>
         </template>
 </dmodal-cp>
 
@@ -409,74 +409,74 @@ v-if="transactStatus == 'error'"></alert-cp>
 <!--
 MODAL VIEW
 -->
-<dmodal-cp modalname="modalView" title="View brand">
-       <template slot="alerts"></template>
-       <template slot="content"> 
-       <li> ID: {{storex.item.id}}</li>
-       <li> Name: {{storex.item.nome}}</li>
-       <li> Image: <img :src="'/'+storex.item.image" width="30" height="30"></li>
-       <li> Created: {{storex.item.created_at}}</li>
+<dmodal-cp modalname="modalView" title="Visualizando a marca">
+       <template v-slot:alerts></template>
+       <template v-slot:content> 
+       <li> ID: {{storex.item.ID}}</li>
+       <li> Nome: {{storex.item.Nome}}</li>
+       <li> Imagem: <img :src="'/'+storex.item.Imagem" width="30" height="30"></li>
+       <li> Criado em: {{storex.item['Criado em']}}</li>
        <br>
        </template>
-       <template slot="footer">
+       <template v-slot:footer>
        </template>
 
    </dmodal-cp>
 <!--
 MODAL UPDATE
 -->
- <dmodal-cp modalname="modalUpd" title="Update brand">
-  <template slot="alerts">
-    <alert-cp stll="success" title="Transaction performed with success" :details="storex.transact" v-if="storex.transact.status == 'success'">
+ <dmodal-cp modalname="modalUpd" title="Atualizando a marca">
+  <template v-slot:alerts>
+    <alert-cp stll="success" title="Atualização realizada com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
     </alert-cp>
-    <alert-cp stll="danger" title="error in Transaction" 
+    <alert-cp stll="danger" title="erro na atualização" 
     :details="storex.transact" v-if="storex.transact.status == 'error'">
     </alert-cp>
   </template>
 
-       <template slot="content"> 
+       <template v-slot:content> 
        {{setUpdValues()}}
      <div class="form-group">
         
-        <input-cp title="Name of brand" id="updNomex" id-help="updNomeHelp" text-Help="Inform the Name of brand (Update)">
+        <input-cp title="Nome da marca" id="updNomex" id-help="updNomeHelp" text-Help="Informe o nome da marca (Update)">
     
-        <input type="text" class="form-control" id="updNome" v-model="storex.item.nome" aria-describedby="updNomeHelp">
+        <input type="text" class="form-control" id="updNome" v-model="storex.item.Nome" aria-describedby="updNomeHelp">
         </input-cp> 
         </div>
     
         <div class="form-group">
-        <input-cp title="Image" id="updImage" id-help="updImageHelp" text-Help="Select  a Image no formato PNG">
+        <input-cp title="Image" id="updImage" id-help="updImageHelp" text-Help="Selecione uma imagem no formato PNG">
         <input type="file" class="form-control-file" 
         id="updNome" :key="fileInputKey"
-        aria-describedby="updImageHelp" placeholder="Select a Image" @change="loadImage($event)">
+        aria-describedby="updImageHelp" placeholder="Selecione a imagem" @change="loadImage($event)">
         </input-cp>
         </div>
        </template>
 
-       <template slot="footer">
-       <button type="button" class="btn btn-secondary" @click="resetValues()">Clear</button>
-        <button type="button" class="btn btn-primary" @click="updateh()">Update</button>
+       <template v-slot:footer>&nbsp;
+       <button type="button" class="btn btn-secondary" @click="resetValues()">Limpar dados</button>&nbsp;
+        <button type="button" class="btn btn-primary" @click="updateh()">Atualizar</button>
        </template>
 
    </dmodal-cp>
 <!--
 MODAL DELETE
 -->
-<dmodal-cp modalname="modalDel" title="View brand">
-       <template slot="alerts">
-           <alert-cp stll="success" title="Deleted  with success" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
-            <alert-cp stll="danger" title="error to delete proccess" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
+<dmodal-cp modalname="modalDel" title="Visualizando a marca">
+       <template v-slot:alert>
+           <alert-cp stll="success" title="Excluído com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
+            <alert-cp stll="danger" title="Erro no processo de exclusão" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
        </template>
-       <template slot="content"> 
-       <h4>Delete the Brand with follow content</h4><hr>
-       <li> ID: {{storex.item.id}}</li>
-       <li> Name: {{storex.item.nome}}</li>
-       <li> Image: <img :src="'/'+storex.item.image" width="30" height="30"></li>
-       <li> Created: {{storex.item.created_at}}</li>
+       <template v-slot:content> 
+       <h4>Prestes a excluir a marca com o seguinte conteúdo:</h4><hr>
+       <li> ID: {{storex.item.ID}}</li>
+       <li> Nome: {{storex.item.Nome}}</li>
+       <li> Imagem: <img :src="'/'+storex.item.Imagem" width="30" height="30"></li>
+       <li> Data criação: {{storex.item['Criado em']}}</li>
        <br>
        </template>
-       <template slot="footer">
-         <button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirm</button>
+       <template v-slot:footer>
+         <button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirma</button>
        </template>
 
    </dmodal-cp>
@@ -494,7 +494,7 @@ MODAL DELETE
 LIST
 -->
 <!-- = = = = = = = =  =  =[COMPONENT][Card:List]  -->
-<card-cp title="List of brands">
+<card-cp title="Lista de marcas">
 
     <template v-slot:content>
      <table-cp :dbdatas="marcasdata"
@@ -502,13 +502,13 @@ LIST
                :dview="{visible:true, dataTarget:'modalView'}"
                :ddel="{visible:true, dataTarget:'modalDel'}"
                :dupd="{visible:true, dataTarget:'modalUpd'}"
-               :config="{title:'NotNullable', amountcolls: 1, refrow:'nullable',refname:'nullable',visible:true, imagefield:'Image',funvisible:false}"
+               :config="{title:'NotNullable', amountcolls: 1, refrow:'nullable',refname:'nullable',visible:true, imagefield:'Imagem',funvisible:false}"
      ></table-cp>
       </template>
 
       <template v-slot:footer>
       <button type="button" class="btn btn-primary btn-sm float-right"
-      onclick="document.getElementById('modalBrandAdd').style.display='block'">Add</button>
+      onclick="document.getElementById('modalBrandAdd').style.display='block'">Adicionar</button>
 
 
     </template>

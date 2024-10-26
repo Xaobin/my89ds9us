@@ -21,6 +21,8 @@ export default {
                 this.storex.setItem(obj);
                let mdname=this.dview.dataTarget; 
                 document.getElementById(mdname).style.display='block';
+                console.log('Item armazenado:')
+                console.log(this.storex.item);
             },
          setStoreUpd(obj){
                 this.storex.setItem(obj);
@@ -101,21 +103,18 @@ export default {
   //  neovar.forEach((ell)=>{ console.log(ell); })
             return neovar;  
 
-     },
+     }
 // = =  = =  = =  = =  = =  = =  = =  = =  = =  = =  = =     
-    titlex(){
-        return this.titles;
-    }
+  
 // - - - - - - - - - - - - - - - - - -                     
         },
 // - - - - - - - - - - - - - - - - - -        
 mounted() {
-    console.log('Filter datas');
-    console.log(this.filterDatasII);
-    console.log(' titlex');
-    console.log(this.titlex);
-  //  console.log('DB datas');
-  //  console.log(this.dbdatas);
+   // console.log('Filter datas');
+  //  console.log(this.filterDatasII);
+   
+    console.log('DB datas');
+    console.log(this.dbdatas);
     
 },        
 // - - - - - - - - - - - - - - - - - -        
@@ -152,21 +151,20 @@ keyValue = ID Brand_id, Image...
         </thead>
 
         <tbody>
-            <tr v-for="obj, keyx in filterDatasII" :key="keyx">
-            <td v-for="numb in numberTitles">
+         <tr v-for="obj, keyx in filterDatasII" :key="keyx">
+          <td v-for="numb in numberTitles">
 
             <span v-for="tt, kk in titles" :key="kk">
-                <span v-for="value, keyValue in obj" :key="keyValue">
+              <span v-for="value, keyValue in obj" :key="keyValue">
                 <span v-if="((tt.ordershow==numb)&&(tt.visible==true)&&(tt.title==keyValue)&&(config.imagefield!=keyValue))">{{value}}</span>
 
                 <span v-if="((tt.ordershow==numb)&&(tt.visible==true)&&(tt.title==keyValue)&&(config.imagefield==keyValue))"><img :src="'/'+value" width="30" height="30"></span>
                 
-                </span>
-                </span>
-     
+              </span>
+            </span>
+          </td>
 
-                </td>
-                <td v-if="config.visible==true"><span>
+          <td v-if="config.visible==true"><span>
             <a type="button" v-if="dview.visible"  @click="setStore(obj)"
             class="btn btn-sm btn-outline-secondary">View</a>
 
@@ -178,13 +176,11 @@ keyValue = ID Brand_id, Image...
 
             <a type="button" v-if="ddel.visible"  @click="setStoreDel(obj)"
             class="btn btn-sm btn-outline-secondary">Delete</a></span>
-                </td>
+          </td>
                         
-                        </tr>
-                    </tbody>
-
-
-             </table>
+        </tr>
+        </tbody>
+        </table>
 
 
 </div>
