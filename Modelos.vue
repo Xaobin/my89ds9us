@@ -30,7 +30,7 @@ import { useStore } from '../store/store1'
        assentos:{title:'Assentos', ordershow:5, visible:false},
        air_bag:{title:'Air Bag', ordershow:6, visible:false},
        abs:{title:'ABS', ordershow:7, visible:false},
-       ref_car_marca:{title:'Marca', ordershow:8,visible:true},
+       ref_marca:{title:'Marca', ordershow:8,visible:true},
        marca_id:{title:'Marca_ID', ordershow:9, visible:false}
        }; 
         return atitles;
@@ -61,7 +61,7 @@ import { useStore } from '../store/store1'
                 fileImagem: [],
                 amountReq: 0,
                 refMarcaVals: {},
-                modelsdata:[],
+                modelosdata:[],
                 refNome:0,
                 fileInputKey: 0,
                 evtarget:'',
@@ -155,15 +155,15 @@ searchh(){
     }
     if (this.$refs.inputNome.value!=''){
         if (vallSearch!=''){vallSearch+="@@"; }
-        vallSearch+="Nome="+this.$refs.inputNome.value;
+        vallSearch+="nome="+this.$refs.inputNome.value;
     }
       if (this.$refs.inputPortas.value>0){
         if (vallSearch!=''){vallSearch+="@@"; }
-        vallSearch+="Portas="+this.$refs.inputPortas.value;
+        vallSearch+="portas="+this.$refs.inputPortas.value;
     }
       if (this.$refs.inputAssentos.value>0){
         if (vallSearch!=''){vallSearch+="@@"; }
-        vallSearch="Assentos="+this.$refs.inputAssentos.value;
+        vallSearch="assentos="+this.$refs.inputAssentos.value;
     }
       if (this.$refs.inputairbags.value>0){
         if (vallSearch!=''){vallSearch+="@@"; }
@@ -186,7 +186,7 @@ searchh(){
       console.log(vallSearch);
       axios.get(urii, config)
           .then(response => {
-              this.modelsdata = response.data;
+              this.modelosdata = response.data;
              // this.datasearch = response.data;
               //this.insearch='true';
               //console.log(this.datasearch);
@@ -293,7 +293,7 @@ searchh(){
       //console.log("List Loaded");
       axios.get(this.urlBase, config)
           .then(response => {
-              this.modelsdata = response.data
+              this.modelosdata = response.data
               //console.log(this.Marcas)
           })
           .catch(errors => {
@@ -379,12 +379,12 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
   
 <p v-if="opsearch==false">
   <a class="btn btn-primary" @click="openSearch()">
-    Open Search
+    Abrir Pesquisa
   </a>
 </p>
 <p v-if="opsearch==true">
 <button class="btn btn-danger"  @click="openSearch()">
-      Close Search  
+      Abrir Pesquisa  
      </button>
 </p>
 <div id="collSearch" v-if="opsearch==true">
@@ -402,7 +402,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
         <input type="number" class="form-control mb-2" id="inputabs" aria-describedby="NomeHelp"
         placeholder="1 if have abs - 0 if don't have abs"  ref="inputabs">
 
-     <p><button class="btn btn-primary btn-sm mb-3" @click="searchh()">Search</button></p>
+     <p><button class="btn btn-primary btn-sm mb-3" @click="searchh()">Localizar</button></p>
 
 </div>
     
@@ -420,9 +420,9 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 <dmodal-cp modalNome="modalAdd" title="Add Model">
 <template v-slot:alerts> 
 
- <alert-cp stll="success" title="Transaction performed with success" :details="storex.transact" v-if="storex.transact.status == 'success'">
+ <alert-cp stll="success" title="O Item foi adicionado com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
     </alert-cp>
-    <alert-cp stll="danger" title="error in Transaction" 
+    <alert-cp stll="danger" title="Erro ao adicionar um item - consulte o system administrator" 
     :details="storex.transact" v-if="storex.transact.status == 'error'">
     </alert-cp>
 
@@ -440,22 +440,22 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
  
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariaPortas">Portas</span>
-    <input type="number" class="form-control" id="portasmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="portasmodelo" placeholder="quantidade de portas" 
     aria-describedby="ariaPortas" v-model="portasmodelo"></div>
 
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariaAssentos">Assentos</span>
-    <input type="number" class="form-control" id="assentosmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="assentosmodelo" placeholder="quantidade de assentos" 
     aria-describedby="ariaAssentos" v-model="assentosmodelo"></div>
    
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariabags">Air Bags</span>
-    <input type="number" class="form-control" id="airbagmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="airbagmodelo" placeholder="Possui Air bag? 0-Não 1-Sim" 
     aria-describedby="ariabags" v-model="airbagmodelo"></div>
 
     <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariaabs">ABS</span>
-    <input type="number" class="form-control" id="absmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="absmodelo" placeholder="Possui ABS?" 
     aria-describedby="ariaabs" v-model="absmodelo"></div>
 
     <div class="input-group input-group-sm mb-3">
@@ -603,7 +603,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
             <alert-cp stll="danger" title="error to delete proccess" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
        </template>
        <template v-slot:content> 
-       <h4>Delete the Model with follow content</h4><hr>
+       <h4>Excluir o Modelo de veículo com o seguinte conteúdo:</h4><hr>
        <li> ID: {{storex.item.ID}}</li>
        <li> Nome: {{storex.item.Nome}}</li>
        <li> Imagem: <img :src="'/'+storex.item.Imagem" width="150" height="87"></li>
@@ -629,19 +629,19 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 <card-cp title="List of models">
 
     <template v-slot:"content">
-     <table-cp :dbdatas="modelsdata"
+     <table-cp :dbdatas="modelosdata"
                :titles="titlesCP"
                :dview="{visible:true, dataTarget:'modalView'}"
                :ddel="{visible:true, dataTarget:'modalDel'}"
                :dupd="{visible:true, dataTarget:'modalUpd'}"
-               :config="{title:'Operations', amountcolls: 1, refrow:'ref_car_Marca',refNome:'Nome', visible:true, typer:'last', Imagemfield:'Imagem',funvisible:false}"
+               :config="{title:'Operations', amountcolls: 1, refrow:'ref_marca',refname:'Nome', visible:true, typer:'last', imagefield:'Imagem',funvisible:false}"
               
      ></table-cp>
       </template>
 
       <template v-slot:"footer">
       <button type="button" class="btn btn-primary btn-sm float-right"
-      onclick="document.getElementById('modalAdd').style.display='block'">Add</button>
+      onclick="document.getElementById('modalAdd').style.display='block'">Adicionar</button>
 <!--button type="button" class="btn btn-primary btn-sm float-right"
       @click="printVall()">VVV</button -->
      
