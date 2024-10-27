@@ -192,7 +192,7 @@ searchh(){
               //console.log(this.datasearch);
           })
           .catch(errors => {
-            alert("the resource was not found");
+            alert("Não foi possível localizar");
               console.log(" - - - -");
               console.log(errors.response.data.message);
           })
@@ -210,16 +210,16 @@ searchh(){
     this.refNome=this.$refs.refUpdMarca.value;
     let formData = new FormData();
     formData.append('_method', 'PATCH');
-    formData.append('Nome', this.storex.item.Nome);
-    formData.append('Marca_id',this.refNome);
-    formData.append('Portas',this.storex.item.Portas);
-    formData.append('Assentos',this.storex.item.Assentos);
+    formData.append('nome', this.storex.item.Nome);
+    formData.append('marca_id',this.refNome);
+    formData.append('portas',this.storex.item.Portas);
+    formData.append('assentos',this.storex.item.Assentos);
     formData.append('air_bag',this.storex.item['Air Bag']);
     formData.append('abs',this.storex.item.ABS);
     //formData.append('',this.storex.item.);
  
     if(this.fileImagem[0]) {
-        formData.append('Imagem', this.fileImagem[0]);
+        formData.append('imagem', this.fileImagem[0]);
         this.resetValues();
     }
 
