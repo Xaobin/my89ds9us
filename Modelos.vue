@@ -358,7 +358,12 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     }
 /* . . . . . . . . . . . . . . . . . . . */
 /* . . . . . . . . . . . . . . . . . . . */
-
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
 
 </script>
 
@@ -370,7 +375,9 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     <div class="row justify-content-center">
     <div class="container-fluid col-md-8">
 
-
+ <!-- = = = = = = = =  =  [BEGIN] -->
+<!-- = = = = = = = =  =  [ of ] -->
+<!-- = = = = = = = =  =  [ SEARCH ] -->
  <!-- = = = = = = = =  =  =  = = [COMPONENT][Card:Search] -->
 
 
@@ -413,7 +420,9 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
      
 
 
-
+ <!-- = = = = = = = =  =  [BEGIN] -->
+<!-- = = = = = = = =  =  [ of ] -->
+<!-- = = = = = = = =  =  [ ADD ] -->
  <!-- = = = = = = = =  =  [End of Card:Search] = -->
 
 <!-- = = = = = = = =  =  =[COMPONENT][Modal:Add]-->
@@ -468,8 +477,8 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     <div class="form-group"> <!-- = =[Input:Imagem] = = -->
      
     <input-cp title="Imagem" id="newImagem" id-help="newImagemHelp"
-    text-help="Select the Imagem in format PNG">
-    <input type="file" class="form-control-file" id="newImagem" aria-describedby="newImagemHelp" placeholder="Select a Imagem"
+    text-help="Seleciona a imagem no formato png">
+    <input type="file" class="form-control-file" id="newImagem" aria-describedby="newImagemHelp" placeholder="Selecione a imagem"
     @change="loadImagem($event)">
     </input-cp> 
     </div>
@@ -485,6 +494,11 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 </dmodal-cp>
 
     <!-- = = = = = = = =  =  [End of Modal] -->
+
+
+        <!-- = = = = = = = =  =  [BEGIN] -->
+        <!-- = = = = = = = =  =  [ of ] -->
+        <!-- = = = = = = = =  =  [ VIEW ] -->
 
 
 <dmodal-cp modalNome="modalView" title="View Model">
@@ -532,11 +546,15 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 
    </dmodal-cp>
 
+    <!-- = = = = = = = =  =  [BEGIN] -->
+    <!-- = = = = = = = =  =  [ of ] -->
+    <!-- = = = = = = = =  =  [ UPDATE ] -->
+
  <dmodal-cp modalNome="modalUpd" title="Update Model">
   <template v-slot:alerts>
-    <alert-cp stll="success" title="Transaction performed with success" :details="storex.transact" v-if="storex.transact.status == 'success'">
+    <alert-cp stll="success" title="Atualização realizada com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
     </alert-cp>
-    <alert-cp stll="danger" title="error in Transaction" 
+    <alert-cp stll="danger" title="erro na atualização - consultar o system administrator" 
     :details="storex.transact" v-if="storex.transact.status == 'error'">
     </alert-cp>
   </template>
@@ -623,7 +641,9 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 
 
 
-
+        <!-- = = = = = = = =  =  [LIST] -->
+        <!-- = = = = = = = =  =  [ LIST ] -->
+        <!-- = = = = = = = =  =  [ LIST ] -->
 
 <!-- = = = = = = = =  =  =[COMPONENT][Card:List]  -->
 <card-cp title="List of models">
