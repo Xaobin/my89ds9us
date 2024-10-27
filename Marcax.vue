@@ -193,13 +193,13 @@ console.log("Enter response");
 
      axios.post(url, formData)
          .then(response => {
-             this.transactStatus = 'success';
+             //this.transactStatus = 'success';
              this.storex.setStatus('success');
              this.storex.transact.msg = response.data.msg;
              this.loadList(); 
          })
          .catch(errors => {
-             this.transactStatus = 'error';
+            // this.transactStatus = 'error';
              this.storex.setStatus('error');
              this.storex.transact.msg = errors.response.data.msg;
          })
@@ -466,9 +466,9 @@ MODAL UPDATE
 MODAL DELETE
 -->
 <dmodal-cp modalname="modalDel" title="Visualizando a marca">
-       <template v-slot:alert>
-           <alert-cp stll="success" title="Excluído com sucesso" :details="storex.transact" v-if="transactStatus == 'success'"></alert-cp>
-            <alert-cp stll="danger" title="Erro no processo de exclusão" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
+       <template v-slot:alerts>
+         <alert-cp stll="success" title="Excluído com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
+         <alert-cp stll="danger" title="Erro no processo de exclusão" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
        </template>
        <template v-slot:content> 
        <h4>Prestes a excluir a marca com o seguinte conteúdo:</h4><hr>
@@ -479,7 +479,7 @@ MODAL DELETE
        <br>
        </template>
        <template v-slot:footer>
-         <button type="button" class="btn btn-danger" @click="deleteh()" v-if="transactStatus != 'success'">Confirma</button>
+         <button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirma</button>
        </template>
 
    </dmodal-cp>
