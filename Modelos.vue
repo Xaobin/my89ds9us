@@ -147,7 +147,7 @@ printVall(){
  /* . . . . . . . . . . . . . . . . . . . */
   resetValues(){
   // this.$refs.updNome.value='';
-   this.evtarget.value='';
+   //this.evtarget.value='';
     //this.fileInputKey=-1;
     console.log(this.fileImagem[0]);
     //if (this.$refs.updNome!=undefined){
@@ -410,7 +410,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
  <!-- = = = = = = = =  =  =  = = [COMPONENT][Card:Search] -->
 
 
-<card-cp title="Search for models">
+<card-cp title="Localizar um modelo específico">
     <template v-slot:content>
   
 <p v-if="opsearch==false">
@@ -429,14 +429,14 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
      <input type="text" class="form-control mb-2" id="inputNome" aria-describedby="NomeHelp"
         placeholder="Nome of model"  ref="inputNome">
      <input type="number" class="form-control mb-2" id="inputPortas" aria-describedby="NomeHelp"
-        placeholder="amount of Portas"  ref="inputPortas">
+        placeholder="quantidade of Portas"  ref="inputPortas">
 
         <input type="number" class="form-control mb-2" id="inputAssentos" aria-describedby="NomeHelp"
-        placeholder="amount of Assentos"  ref="inputAssentos">
+        placeholder="quantidade of Assentos"  ref="inputAssentos">
         <input type="number" class="form-control mb-2" id="inputairbags" aria-describedby="NomeHelp"
-        placeholder="1 if have air bag - 0 if don't have air bag"  ref="inputairbags">
+        placeholder="1 tem air bag - 0 não tem air bag"  ref="inputairbags">
         <input type="number" class="form-control mb-2" id="inputabs" aria-describedby="NomeHelp"
-        placeholder="1 if have abs - 0 if don't have abs"  ref="inputabs">
+        placeholder="1 tem abs - 0 não tem abs"  ref="inputabs">
 
      <p><button class="btn btn-primary btn-sm mb-3" @click="searchh()">Localizar</button></p>
 
@@ -454,7 +454,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 <!-- = = = = = = = =  =  [ ADD ] -->
 <!-- = = = = = = = =  =  [ ADD ] -->
 <!-- = = = = = = = =  =  =[COMPONENT][Modal:Add]-->
-<dmodal-cp modalname="modalAdd" title="Add Model">
+<dmodal-cp modalname="modalAdd" title="Adicionar Modelo de veículos">
 <template v-slot:alerts> 
 
  <alert-cp stll="success" title="O Item foi adicionado com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
@@ -578,7 +578,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     <!-- = = = = = = = =  =  [ UPDATE ] -->
     <!-- = = = = = = = =  =  [ UPDATE ] -->
 
- <dmodal-cp modalname="modalUpd" title="Update Model">
+ <dmodal-cp modalname="modalUpd" title="Atualizar Modelo de veículo">
   <template v-slot:alerts>
     <alert-cp stll="success" title="Atualização realizada com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
     </alert-cp>
@@ -599,22 +599,22 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
  
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariaPortas">Portas</span>
-    <input type="number" class="form-control" id="portasmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="portasmodelo" placeholder="quantidade de portas" 
     aria-describedby="ariaPortas" v-model="storex.item.Portas"></div>
 
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariaAssentos">Assentos</span>
-    <input type="number" class="form-control" id="assentosmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="assentosmodelo" placeholder="Quantidade de assentos" 
     aria-describedby="ariaAssentos" v-model="storex.item.Assentos"></div>
    
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariabags">Air Bags</span>
-    <input type="number" class="form-control" id="airbagmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="airbagmodelo" placeholder="possui air bag?" 
     aria-describedby="ariabags" v-model="storex.item['Air Bag']"></div>
 
     <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="ariaabs">ABS</span>
-    <input type="number" class="form-control" id="absmodelo" placeholder="amount" 
+    <input type="number" class="form-control" id="absmodelo" placeholder="possui abs?" 
     aria-describedby="ariaabs" v-model="storex.item.ABS"></div>
 
     <div class="input-group input-group-sm mb-3">
@@ -637,18 +637,18 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
        </template>
 
        <template v-slot:footer>
-       <button type="button" class="btn btn-secondary" @click="resetValues()">Clear</button>
-        <button type="button" class="btn btn-primary" @click="updateh()">Update</button>
+       &nbsp;<button type="button" class="btn btn-secondary" @click="resetValues()">Clear</button>
+        &nbsp;<button type="button" class="btn btn-primary" @click="updateh()">Update</button>
        </template>
 
    </dmodal-cp>
  <!-- = = = = = = = =  =  [DELETE] -->
 <!-- = = = = = = = =  =  [ DELETE ] -->
 <!-- = = = = = = = =  =  [ DELETE ] -->
-<dmodal-cp modalname="modalDel" title="View Marca">
+<dmodal-cp modalname="modalDel" title="Ver Marca a ser excluída">
        <template v-slot:alerts>
-           <alert-cp stll="success" title="Deleted  with success" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
-            <alert-cp stll="danger" title="error to delete proccess" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
+           <alert-cp stll="success" title="Excluído com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
+            <alert-cp stll="danger" title="Erro no processo de exclusão - consulte o system administrator" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
        </template>
        <template v-slot:content> 
        <h4>Excluir o Modelo de veículo com o seguinte conteúdo:</h4><hr>
@@ -658,7 +658,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
        <br>
        </template>
        <template v-slot:footer>
-         <button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirm</button>
+         &nbsp;<button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirm</button>
        </template>
 
    </dmodal-cp>
