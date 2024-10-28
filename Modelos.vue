@@ -75,6 +75,12 @@ import { useStore } from '../store/store1'
         },
  /* . . . . . . . . . . . . . . . . . . . */
         methods: {
+            resetForm(){
+                this.nomemodelo=''; this.portasmodelo=0;
+                this.assentosmodelo=0; this.absmodelo=0;
+                this.fileImagem=[]; this.refNome='';
+                this.airbagmodelo=0; //this.evtarget.value='';
+            },
  /* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
@@ -444,8 +450,8 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     
  <!-- = = = = = = = =  =  [End of Card:Search] = -->
 
- <!-- = = = = = = = =  =  [BEGIN] -->
-<!-- = = = = = = = =  =  [ of ] -->
+ <!-- = = = = = = = =  =  [ADD] -->
+<!-- = = = = = = = =  =  [ ADD ] -->
 <!-- = = = = = = = =  =  [ ADD ] -->
 <!-- = = = = = = = =  =  =[COMPONENT][Modal:Add]-->
 <dmodal-cp modalname="modalAdd" title="Add Model">
@@ -510,16 +516,16 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     </template>
 
       <template v-slot:footer>
-        <button type="button" class="btn btn-primary"
-        @click="saveh()">save</button>
+       &nbsp;<button type="button" class="btn btn-secondary" @click="resetForm()" >Limpar dados</button>
+        &nbsp;<button type="button" class="btn btn-primary" @click="saveh()">save</button>
         </template>
 </dmodal-cp>
 
     <!-- = = = = = = = =  =  [End of Modal] -->
 
 
-        <!-- = = = = = = = =  =  [BEGIN] -->
-        <!-- = = = = = = = =  =  [ of ] -->
+        <!-- = = = = = = = =  =  [VIEW] -->
+        <!-- = = = = = = = =  =  [ VIEW ] -->
         <!-- = = = = = = = =  =  [ VIEW ] -->
 
 
@@ -541,7 +547,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 
   <div class="row">
     <div class="col">
-    <img :src="'/'+storex.item.Imagem" width="273" height="192">
+    <img :src="'/'+storex.item.Imagem" width="193" height="122">
     </div>
     <div class="col"></div>
     <div class="col"></div>
@@ -568,8 +574,8 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 
    </dmodal-cp>
 
-    <!-- = = = = = = = =  =  [BEGIN] -->
-    <!-- = = = = = = = =  =  [ of ] -->
+    <!-- = = = = = = = =  =  [UPDATE] -->
+    <!-- = = = = = = = =  =  [ UPDATE ] -->
     <!-- = = = = = = = =  =  [ UPDATE ] -->
 
  <dmodal-cp modalname="modalUpd" title="Update Model">
@@ -636,7 +642,9 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
        </template>
 
    </dmodal-cp>
-
+ <!-- = = = = = = = =  =  [DELETE] -->
+<!-- = = = = = = = =  =  [ DELETE ] -->
+<!-- = = = = = = = =  =  [ DELETE ] -->
 <dmodal-cp modalname="modalDel" title="View Marca">
        <template v-slot:alerts>
            <alert-cp stll="success" title="Deleted  with success" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
