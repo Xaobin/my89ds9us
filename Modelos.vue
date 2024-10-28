@@ -42,7 +42,7 @@ import { useStore } from '../store/store1'
             let tmpv=[];
             const pn = Object.keys(jobj);
             tmpv[0]=jobj['1'].id;
-            tmpv[1]=jobj['1'].Marca;
+            tmpv[1]=jobj['1'].marca;
             neovar.push(tmpv);
         });
         return neovar;
@@ -52,7 +52,7 @@ import { useStore } from '../store/store1'
  /* . . . . . . . . . . . . . . . . . . . */         
         data() {
             return {
-                urlBase: '/api/model',
+                urlBase: '/api/modelo',
                 nomemodelo:'',
                 portasmodelo:0,
                 assentosmodelo:0,
@@ -76,6 +76,8 @@ import { useStore } from '../store/store1'
  /* . . . . . . . . . . . . . . . . . . . */
         methods: {
  /* . . . . . . . . . . . . . . . . . . . */
+ /* . . . . . . . . . . . . . . . . . . . */
+ /* . . . . . . . . . . . . . . . . . . . */
 openSearch(){
     if (this.opsearch==true){
         this.opsearch=false;
@@ -86,19 +88,23 @@ openSearch(){
     }
 },
  /* . . . . . . . . . . . . . . . . . . . */
+ /* . . . . . . . . . . . . . . . . . . . */
+ /* . . . . . . . . . . . . . . . . . . . */
 printVall(){
-///* 
+/* 
     let vol={};
     vol=this.refMarcaVals;
     Object.entries(vol).forEach(jobj => {
-        //console.log(jobj.id+" "+jobj.Nome);
+        console.log(jobj.id+" "+jobj.Nome);
         console.log(jobj);
         });
-        console.log(this.$refs.refUpdMarca.value);
- //*/
+       // console.log(this.$refs.refUpdMarca.value);
+ */
    // let vil=this.refMarcasCP;
-    //vil.forEach((ell)=>{ console.log(ell); })       
+  //  vil.forEach((ell)=>{ console.log(ell); })   
+ // console.log(this.refMarcaVals);
 },
+ /* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
  setUpdValues(){
     //<option :value="storex.item"></option>
@@ -106,10 +112,11 @@ printVall(){
     
  },
    /* . . . . . . . . . . . . . . . . . . . */
+   /* . . . . . . . . . . . . . . . . . . . */
      setRefMarcas(){
 
     //if ( this.amountReq==2 ){
-    let uriI=this.urlBase+"?refMarcavalues=true"; //refMarcavalues
+    let uriI=this.urlBase+"?refmarcavalues=true"; //refMarcavalues
     //console.log("11111111 "+uriI);
     let config = {
           headers: {
@@ -129,7 +136,8 @@ printVall(){
   
    // }    
    },  
-
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
   resetValues(){
   // this.$refs.updNome.value='';
@@ -141,7 +149,9 @@ printVall(){
    //}
    //this.$refs.updNome.value='';
   },
-
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
 searchh(){
     this.storex.transact.status='';
@@ -200,8 +210,8 @@ searchh(){
 
 },
 /* . . . . . . . . . . . . . . . . . . . */
-
-
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
   updateh() {
     this.storex.transact.status='';
@@ -253,6 +263,8 @@ searchh(){
         
     })
 },
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
   deleteh() {
     this.storex.transact.status='';
@@ -282,6 +294,9 @@ searchh(){
 
   },
  /* . . . . . . . . . . . . . . . . . . . */
+ /* . . . . . . . . . . . . . . . . . . . */
+ /* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
   loadList() {
     
       let config = {
@@ -294,12 +309,15 @@ searchh(){
       axios.get(this.urlBase, config)
           .then(response => {
               this.modelosdata = response.data
-              //console.log(this.Marcas)
+              console.log(this.modelosdata)
           })
           .catch(errors => {
               console.log(errors)
           })
  },
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */ 
 /* . . . . . . . . . . . . . . . . . . . */
             loadImagem(e) {
                 // e.target.value='';
@@ -309,7 +327,7 @@ searchh(){
                //console.log(e.target.files);
             },
 /* . . . . . . . . . . . . . . . . . . . */
-
+/* . . . . . . . . . . . . . . . . . . . */
 /* . . . . . . . . . . . . . . . . . . . */
     saveh() {
         console.log(this.nomemodelo, this.fileImagem[0])
@@ -347,11 +365,16 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 
     }
 /* . . . . . . . . . . . . . . . . . . . */
-        },
+   
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+},
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
 /* . . . . . . . . . . . . . . . . . . . */
         mounted() {  
             this.loadList();
-           this.setRefMarcas();
+            this.setRefMarcas();
             
 
         }
@@ -418,15 +441,14 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     </template>
     </card-cp>
      
-
+    
+ <!-- = = = = = = = =  =  [End of Card:Search] = -->
 
  <!-- = = = = = = = =  =  [BEGIN] -->
 <!-- = = = = = = = =  =  [ of ] -->
 <!-- = = = = = = = =  =  [ ADD ] -->
- <!-- = = = = = = = =  =  [End of Card:Search] = -->
-
 <!-- = = = = = = = =  =  =[COMPONENT][Modal:Add]-->
-<dmodal-cp modalNome="modalAdd" title="Add Model">
+<dmodal-cp modalname="modalAdd" title="Add Model">
 <template v-slot:alerts> 
 
  <alert-cp stll="success" title="O Item foi adicionado com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
@@ -501,7 +523,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
         <!-- = = = = = = = =  =  [ VIEW ] -->
 
 
-<dmodal-cp modalNome="modalView" title="View Model">
+<dmodal-cp modalname="modalView" title="Visualizando o modelo">
        <template v-slot:alerts></template>
        <template v-slot:content> 
     
@@ -550,7 +572,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
     <!-- = = = = = = = =  =  [ of ] -->
     <!-- = = = = = = = =  =  [ UPDATE ] -->
 
- <dmodal-cp modalNome="modalUpd" title="Update Model">
+ <dmodal-cp modalname="modalUpd" title="Update Model">
   <template v-slot:alerts>
     <alert-cp stll="success" title="Atualização realizada com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
     </alert-cp>
@@ -615,7 +637,7 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
 
    </dmodal-cp>
 
-<dmodal-cp modalNome="modalDel" title="View Marca">
+<dmodal-cp modalname="modalDel" title="View Marca">
        <template v-slot:alerts>
            <alert-cp stll="success" title="Deleted  with success" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
             <alert-cp stll="danger" title="error to delete proccess" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
@@ -646,20 +668,20 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
         <!-- = = = = = = = =  =  [ LIST ] -->
 
 <!-- = = = = = = = =  =  =[COMPONENT][Card:List]  -->
-<card-cp title="List of models">
+<card-cp title="Lista de modelos de veículos">
 
-    <template v-slot:"content">
+    <template v-slot:content>
      <table-cp :dbdatas="modelosdata"
                :titles="titlesCP"
                :dview="{visible:true, dataTarget:'modalView'}"
                :ddel="{visible:true, dataTarget:'modalDel'}"
                :dupd="{visible:true, dataTarget:'modalUpd'}"
-               :config="{title:'Operations', amountcolls: 1, refrow:'ref_marca',refname:'Nome', visible:true, typer:'last', imagefield:'Imagem',funvisible:false}"
+               :config="{title:'Operations', amountcolls: 1, refrow:'ref_marca',refname:'nome', visible:true, typer:'last', imagefield:'Imagem',funvisible:false}"
               
      ></table-cp>
       </template>
 
-      <template v-slot:"footer">
+      <template v-slot:footer>
       <button type="button" class="btn btn-primary btn-sm float-right"
       onclick="document.getElementById('modalAdd').style.display='block'">Adicionar</button>
 <!--button type="button" class="btn btn-primary btn-sm float-right"
