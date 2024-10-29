@@ -269,12 +269,12 @@ console.log("Enter response");
 
 <card-cp title="Localizar">
     <template v-slot:content>
-  
+  <small>
 <select v-model="selected">
-  <option value="id" enabled><small>Por ID</small></option>
-  <option value="name"><small>Por nome</small></option>
+  <option value="id" enabled>Por ID</option>
+  <option value="name">Por nome</option>
 </select>
-    
+</small>
     <input type="number"  class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-if="selected=='id'" v-model="inpSearchId">
      <input type="text" class="form-control" id="inputname" aria-describedby="nameHelp"
         placeholder="name of client" v-if="selected=='name'" v-model="inpSearchNome">
