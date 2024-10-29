@@ -9,11 +9,12 @@ __   ___   _  ___
 <script>
 import { useStore } from '../store/store1';
     export default {
-        computed: {
-             setup() {
+         setup() {
 	            const storex = useStore();      
 		        return { storex };
 	        },
+        computed: {
+            
             token() {
 
                  let token = document.cookie.split(';').find(ind => {
@@ -52,22 +53,32 @@ import { useStore } from '../store/store1';
  /* . . . . . . . . . . . . . . . . . . . */
         methods: {
  /* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+ add(){
+    this.storex.clearItem();
+    this.storex.setStatus('');
+    document.getElementById('modalAdd').style.display='block';
+ },
+/* . . . . . . . . . . . . . . . . . . . */
+
  setUpdValues(){ 
     
-    this.fileInputKey=this.storex.item.id;
+    this.fileInputKey=this.storex.item.ID;
  
  },
  /* . . . . . . . . . . . . . . . . . . . */
   resetMesgs(){
   
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
 
   },
  /* . . . . . . . . . . . . . . . . . . . */
 searchh(){
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
     let vallSearch='';
     let urii="";
 
@@ -97,7 +108,7 @@ searchh(){
           .catch(errors => {
             alert("Não foi possível localizar");
               console.log(" - - - -");
-              console.log(errors.response.data.message);
+              console.log(errors.response.data.msg);
           })
 
 
@@ -106,8 +117,8 @@ searchh(){
  /* . . . . . . . . . . . . . . . . . . . */
   updateh() {
     this.storex.transact.status='';
-    this.storex.transact.message='';
-    this.clientenome=this.storex.item.nome; 
+    this.storex.transact.msg='';
+    this.clientenome=this.storex.item.Nome; 
     
     let formData = new FormData();
     formData.append('_method', 'PATCH');
@@ -115,7 +126,7 @@ searchh(){
  
     
 
-    let url = this.urlBase + '/' + this.storex.item.id;
+    let url = this.urlBase + '/' + this.storex.item.ID;
     //console.log(url);
     let config = {
         headers: {
@@ -127,7 +138,7 @@ searchh(){
     axios.post(url, formData, config)
     .then(response => {
         this.storex.transact.status = 'success';
-        this.storex.transact.message = 'O registro foi atualizado!';
+        this.storex.transact.msg = 'O registro foi atualizado!';
 console.log("Enter response");
        //
         this.loadList();
@@ -135,7 +146,7 @@ console.log("Enter response");
     .catch(errors => {
         
          this.storex.transact.status = 'error';
-         this.storex.transact.message = errors.response.data.message;
+         this.storex.transact.msg = errors.response.data.msg;
        
         console.log("Enter errors");
         console.log(errors.response);
@@ -145,21 +156,21 @@ console.log("Enter response");
  /* . . . . . . . . . . . . . . . . . . . */
   deleteh() {
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
      let formData = new FormData();
      formData.append('_method', 'delete')
 
-     let url = this.urlBase + '/' + this.storex.item.id
+     let url = this.urlBase + '/' + this.storex.item.ID
 
      axios.post(url, formData)
          .then(response => {
              this.storex.transact.status = 'success';
-             this.storex.transact.message = response.data.message;
+             this.storex.transact.msg = response.data.msg;
              this.loadList(); 
          })
          .catch(errors => {
              this.storex.transact.status = 'error';
-             this.storex.transact.message = errors.response.data.message;
+             this.storex.transact.msg = errors.response.data.msg;
          })
         
 
@@ -192,11 +203,11 @@ console.log("Enter response");
         console.log(this.clientenome);
 
         let formData = new FormData();
-        formData.append('name', this.clientenome)
+        formData.append('nome', this.clientenome);
         
 
         let config = {
-            headers: {                    /* ___1___ */
+            headers: {                   
            'Content-Type': 'multipart/form-data',
            'Accept': 'application/json',
            'Authorization': this.token
@@ -205,17 +216,17 @@ console.log("Enter response");
 
         axios.post(this.urlBase, formData, config)
          .then(response => {
-             this.transactStatus = 'added'      /* ___3___ */
+             this.transactStatus = 'added';    
              this.transactDetails = {
-                 message:'Register ID: '+response.data.id
+                 msg:'Register ID: '+response.data.id
              }
-             console.log("\n[add]The response Value: "+JSON.stringify(response))
-              this.loadList()
+             console.log("\n[add]The response Value: "+JSON.stringify(response));
+              this.loadList();
         })
        .catch(errors => {
            this.transactStatus = 'error';
            this.transactDetails = {
-               message: errors.response.data.message,
+               msg: errors.response.data.msg,
                dbdatas:errors.response.data.errors
           };
           console.log(errors);
@@ -226,7 +237,7 @@ console.log("Enter response");
 /* . . . . . . . . . . . . . . . . . . . */
         },
 /* . . . . . . . . . . . . . . . . . . . */
-        mounted() {  /* ___5___ */
+        mounted() {  
             this.loadList();
             
 
@@ -289,7 +300,7 @@ console.log("Enter response");
 <dmodal-cp modalname="modalAdd" title="Adicionar cliente">
 <template v-slot:alerts> 
 <alert-cp stll="success" :details="transactDetails"
-title="Registrado com sucesso!
+title="Registrado com sucesso!"
 v-if="transactStatus == 'added'"></alert-cp>
 <alert-cp stll="danger" :details="transactDetails"
 title="Erro no registro - consulte o administrador do sistema"
@@ -310,7 +321,7 @@ v-if="transactStatus == 'error'"></alert-cp>
     </template>
 
       <template v-slot:footer>
-        <button type="button" class="btn btn-primary"
+        &nbsp;<button type="button" class="btn btn-primary"
         @click="saveh()">Salvar</button>
         </template>
 </dmodal-cp>
@@ -329,9 +340,9 @@ __   ___  _____      __
 <dmodal-cp modalname="modalView" title="Visualizar cliente">
        <template v-slot:alerts></template>
        <template v-slot:content> 
-       <li> ID: {{storex.item.id}}</li>
-       <li> Nome: {{storex.item.nome}}</li>
-       <li> Criado em: {{storex.item.created_at}}</li>
+       <li> ID: {{storex.item.ID}}</li>
+       <li> Nome: {{storex.item.Nome}}</li>
+       <li> Criado em: {{storex.item.Criado}}</li>
        <br>
        </template>
        <template v-slot:footer>
@@ -363,7 +374,7 @@ __   ___  _____      __
         
         <input-cp title="Nome do cliente" id="updNamex" id-help="updNameHelp" text-Help="Informe o nome do cliente (Atualização)">
     
-        <input type="text" class="form-control" id="updName" v-model="storex.item.nome" aria-describedby="updNameHelp">
+        <input type="text" class="form-control" id="updName" v-model="storex.item.Nome" aria-describedby="updNameHelp">
         </input-cp> 
         </div>
     
@@ -391,9 +402,9 @@ __   ___  _____      __
        <template v-slot:content> 
        
        <h4>Excluir cliente com o seguinte conteúdo</h4><hr>
-       <li> ID: {{storex.item.id}}</li>
-       <li> Name: {{storex.item.nome}}</li>
-       <li> Criado em: {{storex.item.created_at}}</li>
+       <li> ID: {{storex.item.ID}}</li>
+       <li> Name: {{storex.item.Nome}}</li>
+       <li> Criado em: {{storex.item.Criado}}</li>
        <br>
        </template>
        <template v-slot:footer>
@@ -435,7 +446,7 @@ __   ___  _____      __
 
       <template v-slot:footer>
       <button type="button" class="btn btn-primary btn-sm float-right"
-      onclick="document.getElementById('modalAdd').style.display='block'">Adicionar</button>
+      @click="add()">Adicionar</button>
 
 
     </template>

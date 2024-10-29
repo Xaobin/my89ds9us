@@ -161,7 +161,7 @@ printVall(){
  /* . . . . . . . . . . . . . . . . . . . */
 searchh(){
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
     let vallSearch='';
     let urii="";
 //inputid inputNome inputPortas inputAssentos inputairbags inputabs
@@ -210,7 +210,7 @@ searchh(){
           .catch(errors => {
             alert("Não foi possível localizar");
               console.log(" - - - -");
-              console.log(errors.response.data.message);
+              console.log(errors.response.data.msg);
           })
 
 
@@ -221,7 +221,7 @@ searchh(){
  /* . . . . . . . . . . . . . . . . . . . */
   updateh() {
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
    // this.nomemodelo=this.storex.item.Nome; 
     this.refNome=this.$refs.refUpdMarca.value;
     let formData = new FormData();
@@ -252,7 +252,7 @@ searchh(){
     axios.post(url, formData, config)
     .then(response => {
         this.storex.transact.status = 'success';
-        this.storex.transact.message = 'O registro foi atualizado!';
+        this.storex.transact.msg = 'O registro foi atualizado!';
           console.log("Enter response");
        //
         this.loadList();
@@ -262,7 +262,7 @@ searchh(){
     .catch(errors => {
         
          this.storex.transact.status = 'error';
-         this.storex.transact.message = errors.response.data.message;
+         this.storex.transact.msg = errors.response.data.msg;
        
         console.log("Enter errors");
       
@@ -274,7 +274,7 @@ searchh(){
  /* . . . . . . . . . . . . . . . . . . . */
   deleteh() {
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
      let formData = new FormData();
      formData.append('_method', 'DELETE')
 
@@ -289,12 +289,12 @@ searchh(){
      axios.post(url, formData,config)
          .then(response => {
              this.storex.transact.status = 'success';
-             this.storex.transact.message = response.data.message;
+             this.storex.transact.msg = response.data.msg;
              this.loadList(); 
          })
          .catch(errors => {
              this.storex.transact.status = 'error';
-             this.storex.transact.message = errors.response.data.message;
+             this.storex.transact.msg = errors.response.data.msg;
          })
         
 
@@ -359,13 +359,13 @@ airbagmodelo absmodelo refNome this.fileImagem[0] */
         axios.post(this.urlBase, formData, config)
          .then(response => {
              this.storex.transact.status = 'success';
-             this.storex.transact.message = 'Register ID: '+response.data.id; 
+             this.storex.transact.msg = 'Register ID: '+response.data.id; 
              //console.log("\n[add]The response Value: "+JSON.stringify(response))
               this.loadList()
         })
        .catch(errors => {
          this.storex.transact.status = 'error';
-             this.storex.transact.message = errors.response.data.message; 
+             this.storex.transact.msg = errors.response.data.msg; 
 
         })
 

@@ -158,7 +158,7 @@ printVall(){
  /* . . . . . . . . . . . . . . . . . . . */
 searchh(){
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
     let vallSearch='';
     let urii="";
 //inputid inputname inputdoors inputseats inputairbags inputabs
@@ -200,7 +200,7 @@ searchh(){
           .catch(errors => {
             alert("A pesquisa foi realizada e nada foi encontrado!");
               console.log(" - - - -");
-              console.log(errors.response.data.message);
+              console.log(errors.response.data.msg);
           })
 
 
@@ -211,7 +211,7 @@ searchh(){
  /* . . . . . . . . . . . . . . . . . . . */
   updateh() {
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
    // this.namemodel=this.storex.item.Name; 
    // this.refname=this.$refs.refUpdModel.value;
     let formData = new FormData();
@@ -241,7 +241,7 @@ searchh(){
     axios.post(url, formData, config)
     .then(response => {
         this.storex.transact.status = 'success';
-        this.storex.transact.message = 'Atualização feita!';
+        this.storex.transact.msg = 'Atualização feita!';
           console.log("Enter response");
        //
         this.loadList();
@@ -251,7 +251,7 @@ searchh(){
     .catch(errors => {
         
          this.storex.transact.status = 'error';
-         this.storex.transact.message = errors.response.data.message;
+         this.storex.transact.msg = errors.response.data.msg;
        
         console.log("Enter errors");
       
@@ -263,7 +263,7 @@ searchh(){
 /* . . . . . . . . . . . . . . . . . . . */
   deleteh() {
     this.storex.transact.status='';
-    this.storex.transact.message='';
+    this.storex.transact.msg='';
      let formData = new FormData();
      formData.append('_method', 'DELETE')
 
@@ -278,12 +278,12 @@ searchh(){
      axios.post(url, formData,config)
          .then(response => {
              this.storex.transact.status = 'success';
-             this.storex.transact.message = response.data.message;
+             this.storex.transact.msg = response.data.msg;
              this.loadList(); 
          })
          .catch(errors => {
              this.storex.transact.status = 'error';
-             this.storex.transact.message = errors.response.data.message;
+             this.storex.transact.msg = errors.response.data.msg;
          })
         
 
@@ -342,13 +342,13 @@ searchh(){
         axios.post(this.urlBase, formData, config)
          .then(response => {
              this.storex.transact.status = 'success';
-             this.storex.transact.message = 'Register ID: '+response.data.id; 
+             this.storex.transact.msg = 'Register ID: '+response.data.id; 
              //console.log("\n[add]The response Value: "+JSON.stringify(response))
               this.loadList()
         })
        .catch(errors => {
          this.storex.transact.status = 'error';
-             this.storex.transact.message = errors.response.data.message; 
+             this.storex.transact.msg = errors.response.data.msg; 
 
         })
 
