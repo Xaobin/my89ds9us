@@ -168,12 +168,12 @@ searchh(){
     }
     if (this.$refs.inputplate.value!=''){
         if (vallSearch!=''){vallSearch+="@@"; }
-        vallSearch+="plate="+this.$refs.inputplate.value;
+        vallSearch+="placa="+this.$refs.inputplate.value;
     }
 
     if (this.$refs.inputavail.value!=''){
         if (vallSearch!=''){vallSearch+="@@"; }
-        vallSearch+="available="+this.$refs.inputavail.value;
+        vallSearch+="disponivel="+this.$refs.inputavail.value;
     }
       if (this.$refs.inputkm.value>0){
         if (vallSearch!=''){vallSearch+="@@"; }
