@@ -36,7 +36,7 @@ import { useStore } from '../store/store1'
     km:{title:'KM', ordershow:4, visible:false},
     updated_at:{title:'Atualizado', ordershow:5, visible:false},
     created_at:{title:'Criado', ordershow:6, visible:false},
-    modelo:{title:'Modelo', ordershow:7,visible:true},
+    ref_modelo:{title:'Modelo', ordershow:7,visible:true},
     modelo_id:{title:'Model_ID', ordershow:8, visible:false}
     
             }; 
@@ -49,10 +49,10 @@ import { useStore } from '../store/store1'
             let tmpv=[];
             const pn = Object.keys(jobj);
             tmpv[0]=jobj['1'].id;
-            tmpv[1]=jobj['1'].model; // !!!!!!!
+            tmpv[1]=jobj['1'].modelo; // !!!!!!!
             neovar.push(tmpv);
         });
-      
+      //console.log(neovar);
         return neovar;
     }
  /* . . . . . . . . . . . . . . . . . . . */           
@@ -96,6 +96,7 @@ openSearch(){
 printVall(){
 ///* 
     let vol={};
+    console.log('Ref modelos');
     vol=this.refModeloVals;
     Object.entries(vol).forEach(jobj => {
         //console.log(jobj.id+" "+jobj.name);
@@ -128,12 +129,13 @@ printVall(){
           .then(response => {
              this.refModeloVals = response.data;
             // this.amountReq++;
+            //console.log(response.data);
           })
           .catch(errors => {
               console.log(errors)
           });
 
-  this.printVall();
+     //this.printVall();
    // }    
    },  
 
@@ -147,8 +149,8 @@ printVall(){
     //  console.log(.storex.item.name);
    //}
    //.$refs.updName.value='';
-    this.cplaca:''; this.cdisponivel:0;
-    this.ckm:0;  //this.refname:'';
+    this.cplaca=''; this.cdisponivel=0;
+    this.ckm=0;  //this.refname:'';
   },
 
  /* . . . . . . . . . . . . . . . . . . . */
@@ -301,7 +303,7 @@ searchh(){
       axios.get(this.urlBase, config)
           .then(response => {
               this.carrosdata = response.data
-              //console.log(this.brands)
+             // console.log(this.carrosdata);
           })
           .catch(errors => {
               console.log(errors)
@@ -357,7 +359,7 @@ searchh(){
         mounted() {  
             this.loadList();
            this.setRefModels();
-            
+            //console.log(this.carrosdata);
 
         }
     }
@@ -569,6 +571,7 @@ __   ___  _____      __
        <template v-slot:footer>
         &nbsp;<button type="button" class="btn btn-primary" @click="updateh()">Atualizar</button>
        </template>
+       
 
    </dmodal-cp>
 <!--
@@ -627,7 +630,7 @@ __   ___  _____      __
                :ddel="{visible:true, dataTarget:'modalDel'}"
                :dupd="{visible:true, dataTarget:'modalUpd'}"
                
-               :config="{title:'Operations', amountcolls: 1, refrow:'car_model',refname:'name', visible:true, typer:'last', imagefield:'Nullable',funvisible:false}"
+               :config="{title:'Operations', amountcolls: 1, refrow:'ref_modelo',refname:'nome', visible:true, typer:'last', imagefield:'Nullable',funvisible:false}"
               
      ></table-cp>
       </template>
