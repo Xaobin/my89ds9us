@@ -7,8 +7,13 @@ __   ___   _  ___
   \_/  \__,_|\___|            
  =  =  =  =  =  =  -->
 <script>
+import { useStore } from '../store/store1';
     export default {
         computed: {
+             setup() {
+	            const storex = useStore();      
+		        return { storex };
+	        },
             token() {
 
                  let token = document.cookie.split(';').find(ind => {
@@ -22,24 +27,24 @@ __   ___   _  ___
             },
            titlesCP(){
                  let atitles={ id:{title:'ID', ordershow:1, visible:true},
-               name:{title:'Name', ordershow:2, visible:true},
-               created_at:{title:'Created', ordershow:3, visible:true},
+               nome:{title:'Nome', ordershow:2, visible:true},
+               created_at:{title:'Criado', ordershow:3, visible:true},
                };
                 return atitles;
             }
         },
         data() {
             return {
-                urlBase: '/api/v1/client',
-                clientname:'',
+                urlBase: '/api/cliente',
+                clientenome:'',
                 transactStatus: '',
                 transactDetails: {},
-                clientdata:[],
+                clientedata:[],
                 fileInputKey: 0,
                 evtarget:'',
                 selected:'id',
                 inpSearchId:'',
-                inpSearchName:'',
+                inpSearchNome:'',
                 insearch:'false'
                 
             }
@@ -49,20 +54,20 @@ __   ___   _  ___
  /* . . . . . . . . . . . . . . . . . . . */
  setUpdValues(){ 
     
-    this.fileInputKey=this.$store.state.item.id;
+    this.fileInputKey=this.storex.item.id;
  
  },
  /* . . . . . . . . . . . . . . . . . . . */
   resetMesgs(){
   
-    this.$store.state.transact.status='';
-    this.$store.state.transact.message='';
+    this.storex.transact.status='';
+    this.storex.transact.message='';
 
   },
  /* . . . . . . . . . . . . . . . . . . . */
 searchh(){
-    this.$store.state.transact.status='';
-    this.$store.state.transact.message='';
+    this.storex.transact.status='';
+    this.storex.transact.message='';
     let vallSearch='';
     let urii="";
 
@@ -70,8 +75,8 @@ searchh(){
         let valss=window.btoa(this.selected+'&&&'+this.inpSearchId)
         vallSearch="?myfilter="+valss;
     }
-    if ((this.inpSearchName!='')&&(this.selected=='name')){
-        let valss=window.btoa(this.selected+'&&&'+this.inpSearchName)
+    if ((this.inpSearchNome!='')&&(this.selected=='nome')){
+        let valss=window.btoa(this.selected+'&&&'+this.inpSearchNome)
         vallSearch="?myfilter="+valss;
     }
     // - - - - - - - - - - - - - - - - - -
@@ -85,12 +90,12 @@ searchh(){
       //console.log("List Loaded");
       axios.get(urii, config)
           .then(response => {
-              this.clientdata = response.data;
+              this.clientedata = response.data;
               this.insearch='true';
               console.log(this.datasearch);
           })
           .catch(errors => {
-            alert("The resource was not found");
+            alert("Não foi possível localizar");
               console.log(" - - - -");
               console.log(errors.response.data.message);
           })
@@ -100,17 +105,17 @@ searchh(){
  /* . . . . . . . . . . . . . . . . . . . */
  /* . . . . . . . . . . . . . . . . . . . */
   updateh() {
-    this.$store.state.transact.status='';
-    this.$store.state.transact.message='';
-    this.clientname=this.$store.state.item.name; 
+    this.storex.transact.status='';
+    this.storex.transact.message='';
+    this.clientenome=this.storex.item.nome; 
     
     let formData = new FormData();
     formData.append('_method', 'PATCH');
-    formData.append('name', this.clientname);
+    formData.append('nome', this.clientenome);
  
     
 
-    let url = this.urlBase + '/' + this.$store.state.item.id;
+    let url = this.urlBase + '/' + this.storex.item.id;
     //console.log(url);
     let config = {
         headers: {
@@ -121,16 +126,16 @@ searchh(){
 
     axios.post(url, formData, config)
     .then(response => {
-        this.$store.state.transact.status = 'success';
-        this.$store.state.transact.message = 'The register was updated';
+        this.storex.transact.status = 'success';
+        this.storex.transact.message = 'O registro foi atualizado!';
 console.log("Enter response");
        //
         this.loadList();
     })
     .catch(errors => {
         
-         this.$store.state.transact.status = 'error';
-         this.$store.state.transact.message = errors.response.data.message;
+         this.storex.transact.status = 'error';
+         this.storex.transact.message = errors.response.data.message;
        
         console.log("Enter errors");
         console.log(errors.response);
@@ -139,22 +144,22 @@ console.log("Enter response");
 },
  /* . . . . . . . . . . . . . . . . . . . */
   deleteh() {
-    this.$store.state.transact.status='';
-    this.$store.state.transact.message='';
+    this.storex.transact.status='';
+    this.storex.transact.message='';
      let formData = new FormData();
      formData.append('_method', 'delete')
 
-     let url = this.urlBase + '/' + this.$store.state.item.id
+     let url = this.urlBase + '/' + this.storex.item.id
 
      axios.post(url, formData)
          .then(response => {
-             this.$store.state.transact.status = 'success';
-             this.$store.state.transact.message = response.data.message;
+             this.storex.transact.status = 'success';
+             this.storex.transact.message = response.data.message;
              this.loadList(); 
          })
          .catch(errors => {
-             this.$store.state.transact.status = 'error';
-             this.$store.state.transact.message = errors.response.data.message;
+             this.storex.transact.status = 'error';
+             this.storex.transact.message = errors.response.data.message;
          })
         
 
@@ -171,7 +176,7 @@ console.log("Enter response");
       //console.log("List Loaded");
       axios.get(this.urlBase, config)
           .then(response => {
-              this.clientdata = response.data
+              this.clientedata = response.data
               //console.log(this.clients)
           })
           .catch(errors => {
@@ -184,10 +189,10 @@ console.log("Enter response");
 
 /* . . . . . . . . . . . . . . . . . . . */
     saveh() {
-        console.log(this.clientname);
+        console.log(this.clientenome);
 
         let formData = new FormData();
-        formData.append('name', this.clientname)
+        formData.append('name', this.clientenome)
         
 
         let config = {
@@ -251,24 +256,22 @@ console.log("Enter response");
  <!-- = = = = = = = =  =  =  = = [COMPONENT][Card:Search] -->
 
 
-<card-cp title="Search for clients">
+<card-cp title="Localizar">
     <template v-slot:content>
   
 <select v-model="selected">
-  <option value="id" enabled><small>Search by Id</small></option>
-  <option value="name"><small>Search by Name</small></option>
+  <option value="id" enabled><small>Por ID</small></option>
+  <option value="name"><small>Por nome</small></option>
 </select>
     
     <input type="number"  class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-if="selected=='id'" v-model="inpSearchId">
      <input type="text" class="form-control" id="inputname" aria-describedby="nameHelp"
-        placeholder="name of client" v-if="selected=='name'" v-model="inpSearchName">
-     <button class="btn btn-primary btn-sm" @click="searchh()">Search</button>
+        placeholder="name of client" v-if="selected=='name'" v-model="inpSearchNome">
+     <button class="btn btn-primary btn-sm" @click="searchh()">Localizar</button>
    
     </template>
     </card-cp>
-     <button class="btn btn-primary" v-if="insearch=='true'" @click="loadList()">
-      Close Search  
-     </button>
+     <button class="btn btn-primary" v-if="insearch=='true'" @click="loadList()">Fechar pesquisa</button>
 
 
 
@@ -283,32 +286,32 @@ console.log("Enter response");
                  
 -->
 <!-- = = = = = = = =  =  =[COMPONENT][Modal:Add]-->
-<dmodal-cp modalname="modalAdd" title="Add client">
-<template slot="alerts"> 
+<dmodal-cp modalname="modalAdd" title="Adicionar cliente">
+<template v-slot:alerts> 
 <alert-cp stll="success" :details="transactDetails"
-title="Registration done successfully"
+title="Registrado com sucesso!
 v-if="transactStatus == 'added'"></alert-cp>
 <alert-cp stll="danger" :details="transactDetails"
-title="Error when trying to register the client"
+title="Erro no registro - consulte o administrador do sistema"
 v-if="transactStatus == 'error'"></alert-cp>
 </template>
 
-       <template slot="content"> 
+       <template v-slot:content> 
        
        <div class="form-group">
-    <input-cp title="name of client" id="newName" id-help="newNameHelp"
-        text-help="Inform the name of client">
+    <input-cp title="nome do cliente" id="newName" id-help="newNameHelp"
+        text-help="Informe o nome do cliente">
     <input type="text" class="form-control" id="newName" aria-describedby="newNameHelp"
-           placeholder="name of client" v-model="clientname">
+           placeholder="nome do cliente" v-model="clientenome">
     </input-cp> 
     </div>
 
      
     </template>
 
-      <template slot="footer">
+      <template v-slot:footer>
         <button type="button" class="btn btn-primary"
-        @click="saveh()">save</button>
+        @click="saveh()">Salvar</button>
         </template>
 </dmodal-cp>
 
@@ -323,15 +326,15 @@ __   ___  _____      __
   \_/ |_|\___| \_/\_/  
                   
 -->
-<dmodal-cp modalname="modalView" title="View client">
-       <template slot="alerts"></template>
-       <template slot="content"> 
-       <li> ID: {{$store.state.item.id}}</li>
-       <li> Name: {{$store.state.item.name}}</li>
-       <li> Created: {{$store.state.item.created_at}}</li>
+<dmodal-cp modalname="modalView" title="Visualizar cliente">
+       <template v-slot:alerts></template>
+       <template v-slot:content> 
+       <li> ID: {{storex.item.id}}</li>
+       <li> Nome: {{storex.item.nome}}</li>
+       <li> Criado em: {{storex.item.created_at}}</li>
        <br>
        </template>
-       <template slot="footer">
+       <template v-slot:footer>
        </template>
 
    </dmodal-cp>
@@ -345,30 +348,30 @@ __   ___  _____      __
       | |                        
       |_|   
 -->
- <dmodal-cp modalname="modalUpd" title="Update client">
-  <template slot="alerts">
-    <alert-cp stll="success" title="Transaction performed with success" :details="$store.state.transact" v-if="$store.state.transact.status == 'success'">
+ <dmodal-cp modalname="modalUpd" title="Atualizar cliente">
+  <template v-slot:alerts>
+    <alert-cp stll="success" title="Atualização feita com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'">
     </alert-cp>
-    <alert-cp stll="danger" title="error in Transaction" 
-    :details="$store.state.transact" v-if="$store.state.transact.status == 'error'">
+    <alert-cp stll="danger" title="erro na atualização - consulte o administrador do sistema" 
+    :details="storex.transact" v-if="storex.transact.status == 'error'">
     </alert-cp>
   </template>
 
-       <template slot="content"> 
+       <template v-slot:content> 
        {{setUpdValues()}} 
      <div class="form-group">
         
-        <input-cp title="Name of client" id="updNamex" id-help="updNameHelp" text-Help="Inform the Name of client (Update)">
+        <input-cp title="Nome do cliente" id="updNamex" id-help="updNameHelp" text-Help="Informe o nome do cliente (Atualização)">
     
-        <input type="text" class="form-control" id="updName" v-model="$store.state.item.name" aria-describedby="updNameHelp">
+        <input type="text" class="form-control" id="updName" v-model="storex.item.nome" aria-describedby="updNameHelp">
         </input-cp> 
         </div>
     
         
        </template>
 
-       <template slot="footer">
-        <button type="button" class="btn btn-primary" @click="updateh()">Update</button>
+       <template v-slot:footer>
+        &nbsp;<button type="button" class="btn btn-primary" @click="updateh()">Atualizar</button>
        </template>
 
    </dmodal-cp>
@@ -380,21 +383,21 @@ __   ___  _____      __
 | (_| |  __| |  __| ||  __/
  \__,_|\___|_|\___|\__\___|
 -->
-<dmodal-cp modalname="modalDel" title="View client">
-       <template slot="alerts">
-           <alert-cp stll="success" title="Deleted  with success" :details="$store.state.transact" v-if="$store.state.transact.status == 'success'"></alert-cp>
-            <alert-cp stll="danger" title="error to delete proccess" :details="$store.state.transact" v-if="$store.state.transact.status == 'error'"></alert-cp>
+<dmodal-cp modalname="modalDel" title="Ver cliente">
+       <template v-slot:alerts>
+           <alert-cp stll="success" title="Excluído com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
+            <alert-cp stll="danger" title="Erro ao excluir - consulte o administrador do sistema" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
        </template>
-       <template slot="content"> 
+       <template v-slot:content> 
        
-       <h4>Delete the client with follow content</h4><hr>
-       <li> ID: {{$store.state.item.id}}</li>
-       <li> Name: {{$store.state.item.name}}</li>
-       <li> Created: {{$store.state.item.created_at}}</li>
+       <h4>Excluir cliente com o seguinte conteúdo</h4><hr>
+       <li> ID: {{storex.item.id}}</li>
+       <li> Name: {{storex.item.nome}}</li>
+       <li> Criado em: {{storex.item.created_at}}</li>
        <br>
        </template>
-       <template slot="footer">
-         <button type="button" class="btn btn-danger" @click="deleteh()" v-if="$store.state.transact.status != 'success'">Confirm</button>
+       <template v-slot:footer>
+         &nbsp;<button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirma</button>
        </template>
 
    </dmodal-cp>
@@ -418,10 +421,10 @@ __   ___  _____      __
        
 -->
 <!-- = = = = = = = =  =  =[COMPONENT][Card:List]  -->
-<card-cp title="List of clients">
+<card-cp title="Lista de clientes">
 
-    <template slot="content">
-     <table-cp :dbdatas="clientdata"
+    <template v-slot:content>
+     <table-cp :dbdatas="clientedata"
                :titles="titlesCP"
                :dview="{visible:true, dataTarget:'modalView'}"
                :ddel="{visible:true, dataTarget:'modalDel'}"
@@ -430,9 +433,9 @@ __   ___  _____      __
      ></table-cp>
       </template>
 
-      <template slot="footer">
+      <template v-slot:footer>
       <button type="button" class="btn btn-primary btn-sm float-right"
-      onclick="document.getElementById('modalAdd').style.display='block'">Add</button>
+      onclick="document.getElementById('modalAdd').style.display='block'">Adicionar</button>
 
 
     </template>
