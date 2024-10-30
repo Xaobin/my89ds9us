@@ -16,8 +16,7 @@ export default {
         },
         methods:{
             setStore(obj){
-               
-                this.storex.setItem(obj);
+                this.initConfig(obj);
                let mdname=this.dview.dataTarget; 
                 document.getElementById(mdname).style.display='block';
                // console.log('Item armazenado:')
@@ -33,21 +32,45 @@ export default {
                let mdname=this.ddel.dataTarget; 
                 document.getElementById(mdname).style.display='block';
             },
-        datasUM(){
-            let neovar=[];
-            var nid=0;
-            console.log('_____---_____');
-            let titlefields = Object.keys(this.titles);
-           // console.log(titlefields);
-             console.log('_____---_____');
-            this.dbdatas.forEach(kobj=>{
-                Object.entries(kobj).forEach(([keyy, vaoo]) => {
-                    
-                    
-
-            });
-            });
-        }
+         /* . . . . . . . . . . . . . . . . . . . */
+        initConfig(tobj){
+           
+            let conff=this.config.neoFunction;
+               if ((conff!=null)||(conff!=undefined)||(conff!=NaN)){
+                                  
+                    this.setSpecificValue(tobj);
+               }
+               else{
+                this.storex.setItem(obj);
+               }
+        },
+        /* . . . . . . . . . . . . . . . . . . . */
+       setSpecificValue(itt){
+            let idd=0;
+             console.log('zzzzzzzz');
+             console.log(itt.id); 
+             console.log(itt.ID); 
+             console.log(itt.Id); 
+            if (itt.id!=undefined){ idd=itt.id; }
+            if (itt.ID!=undefined){ idd=itt.ID; }
+            if (itt.Id!=undefined){ idd=itt.Id; }
+            let uriI=this.config.neoFunction+"/"+idd; 
+            let config = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': this.token
+                }
+            }
+            axios.get(uriI, config)
+                .then(response => {
+                    this.storex.setItem(response.data);
+                   
+                })
+                .catch(errors => {
+                    console.log(errors)
+                });
+               
+   },  
             
     },
 
@@ -150,9 +173,9 @@ export default {
         },
 // - - - - - - - - - - - - - - - - - -        
 mounted() {
-    this.datasUM();
-    //console.log('neoTitles');
-   // console.log(this.titlesCP);
+    //this.datasUM();
+    //console.log('Titles cp');
+    //console.log(this.titlesCP);
    //this.titlesCP
    // console.log('DB datas');
    // console.log(this.dbdatas);

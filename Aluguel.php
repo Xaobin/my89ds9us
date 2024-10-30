@@ -77,7 +77,7 @@ class Aluguel extends Model
         return $dest;
     }
      // = = = = = = = = = = = = = = = = =
-     public function getReferer($carid){
+     public function getVehicle($carid){
         $cons="select modelos.nome as Modelo, marcas.nome as Marca, marcas.imagem as Imagem_marca, 
 modelos.imagem as Imagem_modelo FROM modelos,carros,marcas 
 WHERE carros.id=$carid

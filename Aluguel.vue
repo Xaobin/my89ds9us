@@ -23,18 +23,17 @@ import { useStore } from '../store/store1'
      },
 /* . . . . . . . . . . . . . . . . . . . */        
    titlesCP(){
-    let atitles={ ID:{title:'ID', ordershow:1, visible:true},
-    placa:{title:'Placa', ordershow:2,visible:true},
-    tem_carro:{title:'Modelo', ordershow:3, visible:true},
-    tem_cliente:{title:'Cliente', ordershow:4, visible:true},
-    cliente_id:{title:'cliente_id', ordershow:5, visible:false},
-    carro_id:{title:'carro_id', ordershow:6, visible:false},
-    taxa_diaria:{title:'Taxa_diaria', ordershow:7, visible:false},
-    km_inicial:{title:'KM_inicial', ordershow:8,visible:true},
-    km_final:{title:'KM_final', ordershow:9, visible:false},
-     data_inicial:{title:'Data_inicial', ordershow:10, visible:false},
-    data_final_esperada:{title:'Data_esperada', ordershow:11,visible:false},
-    data_final_realizada:{title:'Data_final', ordershow:12, visible:false}
+    let atitles={ id:{title:'ID', ordershow:1, visible:true},
+    tem_carro:{title:'Placa', ordershow:2, visible:true},
+    tem_cliente:{title:'Cliente', ordershow:3, visible:true},
+    cliente_id:{title:'cliente_id', ordershow:4, visible:false},
+    carro_id:{title:'carro_id', ordershow:5, visible:false},
+    taxa_diaria:{title:'Taxa_diaria', ordershow:6, visible:false},
+    km_inicial:{title:'KM_inicial', ordershow:7,visible:true},
+    km_final:{title:'KM_final', ordershow:8, visible:false},
+     data_inicial:{title:'Data_inicial', ordershow:9, visible:false},
+    data_final_esperada:{title:'Data_esperada', ordershow:10,visible:false},
+    data_final_realizada:{title:'Data_final', ordershow:11, visible:false}
     
             }; 
              return atitles;
@@ -176,6 +175,7 @@ calcVallT2(){
           });
   
    },  
+    
  /* . . . . . . . . . . . . . . . . . . . */
  setRefCars(){
 ///Busca na base de dados os modelos - nível cadastro/update
@@ -772,7 +772,7 @@ __   ___  _____      __
                :dview="{visible:true, dataTarget:'modalView'}"
                :ddel="{visible:false, dataTarget:'modalDel'}"
                :dupd="{visible:false, dataTarget:'modalUpd'}"
-               :config="{title:'Operations', amountcolls: 1, refrow:'tem_cliente', refrowII:'tem_carro', refname:'nome', refnameII:'placa', visible:true, typer:'last', imagefield:'Nullable', funvisible:true, funtitle:'Finalizar aluguel'}"
+               :config="{title:'Operations', amountcolls: 1, refrow:'tem_cliente', refrowII:'tem_carro', refname:'nome', refnameII:'placa', visible:true, typer:'last', imagefield:'Nullable', funvisible:true, funtitle:'Finalizar aluguel',neoFunction:'api/aluguel'}"
               
      ></table-cp>
       </template>
