@@ -25,8 +25,8 @@ import { useStore } from '../store/store1'
    titlesCP(){
     let atitles={ ID:{title:'ID', ordershow:1, visible:true},
     placa:{title:'Placa', ordershow:2,visible:true},
-    modelo:{title:'Modelo', ordershow:3, visible:true},
-    cliente:{title:'Cliente', ordershow:4, visible:true},
+    'tem_carro.nome':{title:'Modelo', ordershow:3, visible:true},
+    'tem_cliente.nome':{title:'Cliente', ordershow:4, visible:true},
     cliente_id:{title:'cliente_id', ordershow:5, visible:false},
     carro_id:{title:'carro_id', ordershow:6, visible:false},
     taxa_diaria:{title:'Taxa_diaria', ordershow:7, visible:false},
@@ -351,7 +351,7 @@ searchh(){
   },
  /* . . . . . . . . . . . . . . . . . . . */
   loadList() {
-    
+      this.storex.clearItem();
       let config = {
           headers: {
               'Accept': 'application/json',
@@ -362,7 +362,7 @@ searchh(){
       axios.get(this.urlBase, config)
           .then(response => {
               this.basedata = response.data
-              //console.log(this.brands)
+              console.log(response.data);
           })
           .catch(errors => {
               console.log(errors)
@@ -429,6 +429,8 @@ searchh(){
             this.loadList();
            this.setRefClients();
            this.setRefCars();
+          // console.log('. . . ');
+         //  console.log(this.basedata);
             
 
         }
@@ -619,7 +621,7 @@ __   ___  _____      __
     
 <div class="container">
   
-    <li class="col">Plate: {{storex.item.Placa}}</li>
+    <li class="col">Placa: {{storex.item.Placa}}</li>
     <li class="col">ID: {{storex.item.ID}}</li>
     <li class="col">Modelo: {{storex.item.Modelo}} - ID:{{storex.item.carro_id}}</li>
     <li class="col">Cliente: {{storex.item.Cliente}} - ID:{{storex.item.cliente_id}}</li>
@@ -651,57 +653,57 @@ __   ___  _____      __
       | |                        
       |_|   
 -->
- <dmodal-cp modalname="modalUpd" title="Finalize Rent">
+ <dmodal-cp modalname="modalUpd" title="Finalizar aluguel">
   <template v-slot:alerts>
-    <alert-cp stll="success" title="Transaction performed with success" :details="storex.transact" v-if="storex.transact.status == 'success'">
+    <alert-cp stll="success" title="Este procedimento foi registrado com sucesso!" :details="storex.transact" v-if="storex.transact.status == 'success'">
     </alert-cp>
-    <alert-cp stll="danger" title="error in Transaction" 
+    <alert-cp stll="danger" title="erro no registro - consulte o administrador do sistema" 
     :details="storex.transact" v-if="storex.transact.status == 'error'">
     </alert-cp>
   </template>
 
     <template v-slot:content> 
        {{setUpdValues()}} 
-       <div v-if="((storex.item.FINAL_DATE!='2023-01-01 00:00:00')&&(storex.item.FINAL_DATE!='0000-00-00 00:00:00'))">This Rent was finalized</div>
+       <div v-if="((storex.item.Data_final!='2024-01-01 00:00:00')&&(storex.item.Data_final!='0000-00-00 00:00:00'))">Este Aluguel foi finalizado!</div>
     <div class="container-sm">   
    <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Taxa Diária</span>
     <input type="text" class="form-control" id="diaryratex"  placeholder="Taxa diária" 
-    v-model="storex.item.Daily_Rate"
+    v-model="storex.item.Taxa_diaria"
     aria-describedby="rate"></div>
 
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">KM inicial</span>
     <input type="number" class="form-control" id="kmInicialX"  placeholder="KM inicial" 
-    v-model="storex.item.KM_Start"
+    v-model="storex.item.KM_inicial"
     aria-describedby="km begin"></div>
 
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Km Final</span>
     <input type="number" class="form-control" id="kmFinalX"  placeholder="km final" 
-    v-model="storex.item.KM_Final"
+    v-model="storex.item.KM_final"
     aria-describedby="km end"></div>
  
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Data inicial</span>
     <input type="datetime-local" step="2" class="form-control" id="dataInicioX" 
-    v-model="storex.item.data_inicial"
+    v-model="storex.item.Data_inicial"
      placeholder="Data inicial" aria-describedby="Data inicial" ></div>
 
          <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Data final (esperada)</span>
-    <input type="datetime-local" step="2" class="form-control" id="fimdatex"  placeholder="End Date Expected" v-model="storex.item.End_DATE"
+    <input type="datetime-local" step="2" class="form-control" id="fimdatex"  placeholder="Data Final esperada" v-model="storex.item.Data_esperada"
     aria-describedby="Date end"></div>
 
          <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Final Date</span>
-    <input type="datetime-local" step="2" class="form-control" id="dataFinalX" placeholder="Real final Date - Fullfill in return" v-model="storex.item.FINAL_DATE"
+    <input type="datetime-local" step="2" class="form-control" id="dataFinalX" placeholder="Data final realizada - Preenchida no retorno" v-model="storex.item.Data_final"
     aria-describedby="final date"></div>
 
     
     <div class="input-group input-group-sm mt-2 mb-2">
      <span class="input-group-text" id="dailyrateHelp">
-     <button type="button" class="btn btn-sm btn-outline-secondary" @click="calcVallT2()">Calcule daily's rate</button>
+     <button type="button" class="btn btn-sm btn-outline-secondary" @click="calcVallT2()">Calcular a Taxa diária</button>
      </span>
     <input type="text" :value="ratex" size="10">
     </div>
@@ -711,7 +713,7 @@ __   ___  _____      __
        </template>
 
        <template v-slot:footer>
-        <button type="button" class="btn btn-primary" @click="updateh()">Finalize Rent</button>
+        &nbsp;<button type="button" class="btn btn-primary" @click="updateh()">Finalizar o aluguel</button>
        </template>
 
    </dmodal-cp>
@@ -724,21 +726,21 @@ __   ___  _____      __
  \__,_|\___|_|\___|\__\___|
                        
 -->
-<dmodal-cp modalname="modalDel" title="Delete Rent">
+<dmodal-cp modalname="modalDel" title="Deletar aluguel">
        <template v-slot:alerts>
-           <alert-cp stll="success" title="Deleted  with success" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
-            <alert-cp stll="danger" title="error to delete proccess" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
+           <alert-cp stll="success" title="Deletado com sucesso" :details="storex.transact" v-if="storex.transact.status == 'success'"></alert-cp>
+            <alert-cp stll="danger" title="erro no processo de exclusão" :details="storex.transact" v-if="storex.transact.status == 'error'"></alert-cp>
        </template>
        <template v-slot:content> 
-       <h4>Delete the Rent with follow content</h4><hr>
+       <h4>Deletar um aluguel com o seguinte conteúdo</h4><hr>
        <li> ID: {{storex.item.ID}}</li>
-       <li> Plate: {{storex.item.Placa}}</li>
-       <li> Model: {{storex.item.Modelo}}</li>
-       <li> Client: {{storex.item.Cliente}}</li>
+       <li> Placa: {{storex.item.Placa}}</li>
+       <li> Modelo: {{storex.item.Modelo}}</li>
+       <li> Cliente: {{storex.item.Cliente}}</li>
        <br>
        </template>
        <template v-slot:footer>
-         <button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirm</button>
+         &nbsp;<button type="button" class="btn btn-danger" @click="deleteh()" v-if="storex.transact.status != 'success'">Confirma</button>
        </template>
 
    </dmodal-cp>
@@ -762,7 +764,7 @@ __   ___  _____      __
             
 -->
 <!-- = = = = = = = =  =  =[COMPONENT][Card:List]  -->
-<card-cp title="List of models">
+<card-cp title="Lista de alugueis">
 
     <template v-slot:content>
      <table-cp :dbdatas="basedata"
@@ -770,14 +772,14 @@ __   ___  _____      __
                :dview="{visible:true, dataTarget:'modalView'}"
                :ddel="{visible:false, dataTarget:'modalDel'}"
                :dupd="{visible:false, dataTarget:'modalUpd'}"
-               :config="{title:'Operations', amountcolls: 1, refrow:'Nullable',refname:'name', visible:true, typer:'last', imagefield:'Nullable', funvisible:true, funtitle:'Close Rent'}"
+               :config="{title:'Operations', amountcolls: 1, refrow:'Nullable', refrowII:'Nullable', refname:'nome', visible:true, typer:'last', imagefield:'Nullable', funvisible:true, funtitle:'Finalizar aluguel'}"
               
      ></table-cp>
       </template>
 
       <template v-slot:footer>
       <button type="button" class="btn btn-primary btn-sm float-right"
-      onclick="document.getElementById('modalAdd').style.display='block'">Add</button>
+      onclick="document.getElementById('modalAdd').style.display='block'">Adicionar</button>
 
      
 
