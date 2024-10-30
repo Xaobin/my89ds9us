@@ -25,8 +25,8 @@ import { useStore } from '../store/store1'
    titlesCP(){
     let atitles={ ID:{title:'ID', ordershow:1, visible:true},
     placa:{title:'Placa', ordershow:2,visible:true},
-    'tem_carro.nome':{title:'Modelo', ordershow:3, visible:true},
-    'tem_cliente.nome':{title:'Cliente', ordershow:4, visible:true},
+    tem_carro:{title:'Modelo', ordershow:3, visible:true},
+    tem_cliente:{title:'Cliente', ordershow:4, visible:true},
     cliente_id:{title:'cliente_id', ordershow:5, visible:false},
     carro_id:{title:'carro_id', ordershow:6, visible:false},
     taxa_diaria:{title:'Taxa_diaria', ordershow:7, visible:false},
@@ -158,7 +158,7 @@ calcVallT2(){
    /* . . . . . . . . . . . . . . . . . . . */
      setRefClients(){
 ///Busca na base de dados os modelos - nível cadastro/update
-    let uriI=this.urlBase+"?refclientesvalues=true"; 
+    let uriI=this.urlBase+"?getclientesvalues=true"; 
     //console.log("11111111 "+uriI);
     let config = {
           headers: {
@@ -179,7 +179,7 @@ calcVallT2(){
  /* . . . . . . . . . . . . . . . . . . . */
  setRefCars(){
 ///Busca na base de dados os modelos - nível cadastro/update
-    let uriI=this.urlBase+"?refcarrosvalues=true"; 
+    let uriI=this.urlBase+"?getcarrosvalues=true"; 
     //console.log("11111111 "+uriI);
     let config = {
           headers: {
@@ -772,7 +772,7 @@ __   ___  _____      __
                :dview="{visible:true, dataTarget:'modalView'}"
                :ddel="{visible:false, dataTarget:'modalDel'}"
                :dupd="{visible:false, dataTarget:'modalUpd'}"
-               :config="{title:'Operations', amountcolls: 1, refrow:'Nullable', refrowII:'Nullable', refname:'nome', visible:true, typer:'last', imagefield:'Nullable', funvisible:true, funtitle:'Finalizar aluguel'}"
+               :config="{title:'Operations', amountcolls: 1, refrow:'tem_cliente', refrowII:'tem_carro', refname:'nome', refnameII:'placa', visible:true, typer:'last', imagefield:'Nullable', funvisible:true, funtitle:'Finalizar aluguel'}"
               
      ></table-cp>
       </template>

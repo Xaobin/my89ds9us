@@ -11,8 +11,7 @@ export default {
             return {
                 openmodal:'false',
                 mousein:'true',
-                jobj:{},
-                items: [{ message: 'Foo' }, { message: 'Bar' }]
+                jobj:{}
             }
         },
         methods:{
@@ -21,8 +20,8 @@ export default {
                 this.storex.setItem(obj);
                let mdname=this.dview.dataTarget; 
                 document.getElementById(mdname).style.display='block';
-                console.log('Item armazenado:')
-                console.log(this.storex.item);
+               // console.log('Item armazenado:')
+              //  console.log(this.storex.item);
             },
          setStoreUpd(obj){
                 this.storex.setItem(obj);
@@ -34,6 +33,21 @@ export default {
                let mdname=this.ddel.dataTarget; 
                 document.getElementById(mdname).style.display='block';
             },
+        datasUM(){
+            let neovar=[];
+            var nid=0;
+            console.log('_____---_____');
+            let titlefields = Object.keys(this.titles);
+           // console.log(titlefields);
+             console.log('_____---_____');
+            this.dbdatas.forEach(kobj=>{
+                Object.entries(kobj).forEach(([keyy, vaoo]) => {
+                    
+                    
+
+            });
+            });
+        }
             
     },
 
@@ -48,10 +62,30 @@ export default {
                     arr.push(cc);
                   }
                 }
-              console.log("------");
+              //console.log("------");
               //arr.forEach((ell)=>{ console.log(ell); })
                 return arr;
             },
+// = =  = =  = =  = =  = =  = =  = =  = =  = =  = =  = =              
+// = =  = =  = =  = =  = =  = =  = =  = =  = =  = =  = = 
+        titlesCP(){
+            let neotitles=[];
+            let ttt=this.titles;
+           
+
+            Object.entries(ttt).forEach(([kk,vv])=> {
+                
+                if (vv.visible==true){ 
+                   
+                    neotitles.push(vv); 
+                }
+               
+            });
+            return neotitles;
+        },
+// = =  = =  = =  = =  = =  = =  = =  = =  = =  = =  = =              
+// = =  = =  = =  = =  = =  = =  = =  = =  = =  = =  = = 
+        
 // = =  = =  = =  = =  = =  = =  = =  = =  = =  = =  = =              
 // = =  = =  = =  = =  = =  = =  = =  = =  = =  = =  = = 
         filterDatasII(){
@@ -69,17 +103,23 @@ export default {
              
              
                 let ttt=this.titles[kk].title;
-                if ((khey==kk)&&(ii==0)){
+                let keyy=khey.toLowerCase();
+                let kkl=kk.toLowerCase();
+                
+                if ((keyy==kkl)&&(ii==0)){
                     nid=vall; elem[ttt]=vall;
                 }    
-                if ((khey==kk)&&(ii>0)&&(khey!=this.config.refrow)&&(khey!=this.config.refrowII)){
+                if ((keyy==kkl)&&(ii>0)&&(keyy!=this.config.refrow)&&(keyy!=this.config.refrowII)){
                     elem[ttt]=vall;
                 }
-                if ((khey==kk)&&(ii>0)&&(khey==this.config.refrow)){    
-                    elem[ttt]=vall.name;
+                if ((keyy==kkl)&&(ii>0)&&(keyy==this.config.refrow)){  
+                    elem[ttt]=vall[this.config.refname];
+                    
                 }
-                if ((khey==kk)&&(ii>0)&&(khey==this.config.refrowII)){
-                    elem[ttt]=vall.name;
+                if ((keyy==kkl)&&(ii>0)&&(keyy==this.config.refrowII)){
+                    //console.log(keyy+'__'+this.config.refrowII);
+                    elem[ttt]=vall[this.config.refnameII];
+                   
                 }
               
                                 
@@ -110,11 +150,12 @@ export default {
         },
 // - - - - - - - - - - - - - - - - - -        
 mounted() {
-   // console.log('Filter datas');
-  //  console.log(this.filterDatasII);
-   
-    console.log('DB datas');
-    console.log(this.dbdatas);
+    this.datasUM();
+    //console.log('neoTitles');
+   // console.log(this.titlesCP);
+   //this.titlesCP
+   // console.log('DB datas');
+   // console.log(this.dbdatas);
     
 },        
 // - - - - - - - - - - - - - - - - - -        
@@ -140,7 +181,7 @@ keyValue = ID Brand_id, Image...
     <table class="table table-hover">
          <thead>
          <tr>
-          <th v-for="t, key in titles" :key="key">
+          <th v-for="t, key in titlesCP" :key="key">
             <span  v-if="t.visible==true">
              {{t.title}}
            </span>  
