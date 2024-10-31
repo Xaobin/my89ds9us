@@ -19,11 +19,11 @@ export default {
                 this.initConfig(obj);
                let mdname=this.dview.dataTarget; 
                 document.getElementById(mdname).style.display='block';
-               // console.log('Item armazenado:')
-              //  console.log(this.storex.item);
+
+              
             },
          setStoreUpd(obj){
-                this.storex.setItem(obj);
+                this.initConfig(obj);
                let mdname=this.dupd.dataTarget; 
                 document.getElementById(mdname).style.display='block';
             },
@@ -48,16 +48,16 @@ export default {
        setSpecificValue(itt){
             let idd=0;
             
-            leturlI="";
+            let urlI="";
             if (itt.id!=undefined){ idd=itt.id; }
             if (itt.ID!=undefined){ idd=itt.ID; }
             if (itt.Id!=undefined){ idd=itt.Id; }
             let urla=window.location.host;
-            if (urla.search('127')!=-1){
+            if (urla.search('127.0.0.1')!=-1){
                  urlI="http://127.0.0.1:8000/"+this.config.neoFunction+"/"+idd;
             }
             else{
-                 uriI=window.location.protocol+'://'+window.location.host+'/'+this.config.neoFunction+"/"+idd; 
+                 urlI=window.location.protocol+'://'+window.location.host+'/'+this.config.neoFunction+"/"+idd; 
             }
             console.log('aaaaaa');
             console.log(urlI);
@@ -71,7 +71,7 @@ export default {
             axios.get(urlI, config)
                 .then(response => {
                     this.storex.setItem(response.data);
-                   
+                    
                 })
                 .catch(errors => {
                     console.log(errors)
@@ -248,16 +248,16 @@ keyValue = ID Brand_id, Image...
 
           <td v-if="config.visible==true"><span>
             <a type="button" v-if="dview.visible"  @click="setStore(obj)"
-            class="btn btn-sm btn-outline-secondary">View</a>
+            class="btn btn-sm btn-outline-secondary">{{dview.title}}</a>
 
             <a type="button" v-if="dupd.visible"  @click="setStoreUpd(obj)"
-            class="btn btn-sm btn-outline-secondary">Update</a>
+            class="btn btn-sm btn-outline-secondary">{{dupd.title}}</a>
 
             <a type="button" v-if="config.funvisible"  @click="setStoreUpd(obj)"
             class="btn btn-sm btn-outline-danger">{{config.funtitle}}</a>
 
             <a type="button" v-if="ddel.visible"  @click="setStoreDel(obj)"
-            class="btn btn-sm btn-outline-secondary">Delete</a></span>
+            class="btn btn-sm btn-outline-secondary">{{ddel.title}}</a></span>
           </td>
                         
         </tr>

@@ -58,7 +58,7 @@ public function show($myid)
 {
     
     $aluguelX=$this->aluguel->find($myid);
-    $varY=$aluguelX->getReferer($aluguelX->carro_id);
+    $varY=$aluguelX->getVehicle($aluguelX->carro_id);
     //$varY={'Modelo':$varY->modelo,'Imagem':$varY->Imagem};
     if ($aluguelX!=NULL){
      $aluguelX=$aluguelX->with('temCarro')->with('temCliente')->get();

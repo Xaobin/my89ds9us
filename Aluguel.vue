@@ -8,7 +8,12 @@ __   ___   _  ___
 import { useStore } from '../store/store1'
     export default {
         setup() {
-	            const storex = useStore();      
+	            const storex = useStore();   
+                 let value=[{"id":0,"cliente_id":0,"carro_id":0,"data_inicial":"","data_final_esperada":"","data_final_realizada":"","taxa_diaria":0,"km_inicial":0,"km_final":null,"created_at":"","updated_at":"",
+    "veiculo":[{"Modelo":"","Marca":"","Imagem_marca":"","Imagem_modelo":""}],
+    "tem_carro":{"id":0,"modelo_id":0,"placa":"","disponivel":0,"km":0,"created_at":"","updated_at":""},
+    "tem_cliente":{"id":0,"nome":"","created_at":"","updated_at":""}}];
+                storex.item=value;   
 		        return { storex };
 	        },
         computed: {
@@ -45,7 +50,7 @@ import { useStore } from '../store/store1'
             let tmpv=[];
             const pn = Object.keys(jobj);
             tmpv[0]=jobj['1'].id;
-            tmpv[1]=jobj['1'].name; // !!!!!!!
+            tmpv[1]=jobj['1'].nome; // !!!!!!!
             neovar.push(tmpv);
         });
       
@@ -58,9 +63,9 @@ import { useStore } from '../store/store1'
             let tmpv=[];
             const pn = Object.keys(jobj);
             tmpv[0]=jobj['1'].id;
-            tmpv[1]=jobj['1'].Placa; // !!!!!!!
-            tmpv[2]=jobj['1'].available;
-            tmpv[3]=jobj['1'].Modelo;
+            tmpv[1]=jobj['1'].placa; // !!!!!!!
+            tmpv[2]=jobj['1'].disponivel;
+            tmpv[3]=jobj['1'].modelo;
             neovar.push(tmpv);
         });
       
@@ -134,11 +139,11 @@ calcVall(){
 },
  /* . . . . . . . . . . . . . . . . . . . */
 calcVallT2(){
- console.log(this.storex.item.FINAL_DATE);
+ //console.log(this.storex.item[0].FINAL_DATE);
  //console.log("-------------------");
-    let taxaDiariaX = this.storex.item.Daily_Rate;
-    let dataInicioX = this.storex.item.data_inicial;
-    let dataFimX = this.storex.item.FINAL_DATE;
+    let taxaDiariaX = this.storex.item[0].taxa_diaria;
+    let dataInicioX = this.storex.item[0].data_inicial;
+    let dataFimX = this.storex.item[0].data_final_realizada;
     let date_1 = new Date(dataInicioX);
     let date_2 = new Date(dataFimX);
     let difference = date_1.getTime() - date_2.getTime();
@@ -149,7 +154,7 @@ calcVallT2(){
  /* . . . . . . . . . . . . . . . . . . . */
  setUpdValues(){
     //<option :value="storex.item"></option>
-    //this.fileInputKey=this.storex.item.ID;
+    //this.fileInputKey=this.storex.item[0].ID;
    // this.ratex=0;
    //if (this.ratex!=0){ this.ratex=0; }
     
@@ -196,7 +201,14 @@ calcVallT2(){
               console.log(errors)
           });
   
-   },  
+   }, 
+ initValuesITEM(){
+    let value=[{"id":0,"cliente_id":0,"carro_id":0,"data_inicial":"","data_final_esperada":"","data_final_realizada":"","taxa_diaria":0,"km_inicial":0,"km_final":null,"created_at":"","updated_at":"",
+    "veiculo":[{"Modelo":"","Marca":"","Imagem_marca":"","Imagem_modelo":""}],
+    "tem_carro":{"id":0,"modelo_id":0,"placa":"","disponivel":0,"km":0,"created_at":"","updated_at":""},
+    "tem_cliente":{"id":0,"nome":"","created_at":"","updated_at":""}}];
+    this.storex.setItem(value);
+   }, 
  /* . . . . . . . . . . . . . . . . . . . */
   resetValues(){
   
@@ -271,25 +283,19 @@ searchh(){
   updateh() {
     this.storex.transact.status='';
     this.storex.transact.msg='';
-   // this.namemodel=this.storex.item.Name; 
+   // this.namemodel=this.storex.item[0].Name; 
    // this.refname=this.$refs.refUpdModel.value;
     let formData = new FormData();
     formData.append('_method', 'PATCH');
-    formData.append('taxa_diaria', this.storex.item.Taxa_diaria);
-    formData.append('km_inicial',this.storex.item.KM_inicial);
-    formData.append('km_final',this.storex.item.KM_final);
-    formData.append('data_inicial',this.storex.item.Data_inicial);
-    formData.append('data_final_esperada', this.storex.item.Data_esperada);
-    formData.append('data_final_realizada',this.storex.item.Data_final);
+    formData.append('taxa_diaria', this.$refs.updTXDiaria.value);
+    formData.append('km_inicial',this.$refs.updKMInicial.value);
+    formData.append('km_final',this.$refs.updKMFinal.value);
+    formData.append('data_inicial',this.$refs.updDInicial.value);
+    formData.append('data_final_esperada', this.$refs.updDFEsperada.value);
+    formData.append('data_final_realizada',this.$refs.updDFRealizada.value);
    
-    
- /*
-    // this. fileImage [0] ) {
-    / //   formData .append('image', this . fileImage[0] );
-    ///    this.resetValues();
-  ///  }
-*/
-    let url = this.urlBase + '/' + this.storex.item.ID
+
+    let url = this.urlBase + '/' + this.storex.item[0].id;
 
     let config = {
         headers: {
@@ -307,7 +313,7 @@ searchh(){
           console.log("Enter response");
        //
         this.loadList();
-          // this.storex.item.name=this.namemodel;
+          // this.storex.item[0].name=this.namemodel;
             //this.fileInputKey=0;
     })
     .catch(errors => {
@@ -351,7 +357,7 @@ searchh(){
   },
  /* . . . . . . . . . . . . . . . . . . . */
   loadList() {
-      this.storex.clearItem();
+      //this.initValuesITEM();
       let config = {
           headers: {
               'Accept': 'application/json',
@@ -385,19 +391,16 @@ searchh(){
     
     
         let formData = new FormData();
-        formData.append('cliente_id', this.$refs.ClienteX.value);
+        formData.append('cliente_id', this.$refs.clienteX.value);
         formData.append('carro_id', this.$refs.carroX.value);
-        formData.append('daily_rate', this.$refs.taxaDiariaX.value);
-        formData.append('km_start', this.$refs.kmInicialX.value);
+        formData.append('taxa_diaria', this.$refs.taxaDiariaX.value);
+        formData.append('km_inicial', this.$refs.kmInicialX.value);
         formData.append('km_final', this.$refs.kmFinalX.value);
         formData.append('data_inicial', this.$refs.dataInicioX.value);
         formData.append('data_final_esperada', this.$refs.dataFimX.value);
         formData.append('data_final_realizada', this.$refs.dataFinalX.value);
-       // data_final_realizada
-      
-  
-     // console.log(this.$refs.dataInicioX);
-        
+ 
+        console.log(formData);
 
         let config = {
             headers: {                    
@@ -414,6 +417,7 @@ searchh(){
              //console.log("\n[add]The response Value: "+JSON.stringify(response))
               this.loadList();
                this.setRefCars();
+               this.initValuesITEM();
         })
        .catch(errors => {
          this.storex.transact.status = 'error';
@@ -429,6 +433,7 @@ searchh(){
             this.loadList();
            this.setRefClients();
            this.setRefCars();
+           this.initValuesITEM();
           // console.log('. . . ');
          //  console.log(this.basedata);
             
@@ -437,7 +442,14 @@ searchh(){
     }
 /* . . . . . . . . . . . . . . . . . . . */
 /* . . . . . . . . . . . . . . . . . . . */
-
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
+/* . . . . . . . . . . . . . . . . . . . */
 
 </script>
 
@@ -544,7 +556,7 @@ searchh(){
      <span class="input-group-text" id="carroX">Placa</span>
     <select ref="carroX" class="form-select form-select-sm">
         <option v-for="itt in refCarrosCP" :value="itt[0]">{{itt[1]}} - ({{itt[3]}}) - 
-        <span v-if="itt[2]==1">(Available)</span> <span v-if="itt[2]==0">(Unavailable)</span>
+        <span v-if="itt[2]==1">(Disponível)</span> <span v-if="itt[2]==0">(Indisponível)</span>
         </option>
     </select>
     </div>
@@ -615,23 +627,23 @@ __   ___  _____      __
 <dmodal-cp modalname="modalView" title="Visualizar aluguel">
        <template v-slot:alerts></template>
        <template v-slot:content> 
-    
-   <h4>{{storex.item.Placa}}</h4> <hr>
+   <h4 v-if="storex.item[0].tem_carro!=undefined">{{storex.item[0].tem_carro.placa}}</h4> <hr>
 
     
-<div class="container">
-  
-    <li class="col">Placa: {{storex.item.Placa}}</li>
-    <li class="col">ID: {{storex.item.ID}}</li>
-    <li class="col">Modelo: {{storex.item.Modelo}} - ID:{{storex.item.carro_id}}</li>
-    <li class="col">Cliente: {{storex.item.Cliente}} - ID:{{storex.item.cliente_id}}</li>
-    <li class="col">KM inicial: {{storex.item.KM_inicial}}</li>
-    <li class="col">Km Final: {{storex.item.KM_final}}</li>
+<div class="container" v-if="storex.item[0].tem_carro!=undefined">
 
-      <li class="col">Taxa Diária : {{storex.item.Taxa_diaria}}</li>
-     <li class="col">Data inicial: {{storex.item.data_inicial}}</li>
-    <li class="col">Data final esperada: {{storex.item.Data_esperada}}</li>
-     <li class="col">Data Final realizada: {{storex.item.Data_final}}</li>
+    <li class="col" >Placa: {{storex.item[0].tem_carro.placa}}</li>
+    <li class="col">ID: {{storex.item[0].id}}</li>
+    <li class="col">Modelo: {{storex.item[0].veiculo[0].Modelo}} </li>
+    <li class="col">Marca: {{storex.item[0].veiculo[0].Marca}} </li>
+    <li class="col">Cliente: {{storex.item[0].tem_cliente.nome}} - ID:{{storex.item[0].cliente_id}}</li>
+    <li class="col">KM inicial: {{storex.item[0].km_inicial}}</li>
+    <li class="col">Km Final: {{storex.item[0].km_final}}</li>
+
+      <li class="col">Taxa Diária : {{storex.item[0].taxa_diaria}}</li>
+     <li class="col">Data inicial: {{storex.item[0].data_inicial}}</li>
+    <li class="col">Data final esperada: {{storex.item[0].data_final_esperada}}</li>
+     <li class="col">Data Final realizada: {{storex.item[0].data_final_realizada}}</li>
   
   
 
@@ -664,42 +676,45 @@ __   ___  _____      __
 
     <template v-slot:content> 
        {{setUpdValues()}} 
-       <div v-if="((storex.item.Data_final!='2024-01-01 00:00:00')&&(storex.item.Data_final!='0000-00-00 00:00:00'))">Este Aluguel foi finalizado!</div>
+     <div v-if="storex.item[0].tem_carro!=undefined">  
+       <!-- div v-if="((storex.item[0].data_final_realizada!='2024-01-01 00:00:00')&&(storex.item[0].data_final_realizada!='0000-00-00 00:00:00'))">Este Aluguel foi finalizado!</div -->
     <div class="container-sm">   
    <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Taxa Diária</span>
-    <input type="text" class="form-control" id="diaryratex"  placeholder="Taxa diária" 
-    v-model="storex.item.Taxa_diaria"
+    <input type="text" class="form-control" ref="updTXDiaria"  placeholder="Taxa diária" 
+    v-model="storex.item[0].taxa_diaria"
     aria-describedby="rate"></div>
 
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">KM inicial</span>
-    <input type="number" class="form-control" id="kmInicialX"  placeholder="KM inicial" 
-    v-model="storex.item.KM_inicial"
+    <input type="number" class="form-control" ref="updKMInicial"  placeholder="KM inicial" 
+    v-model="storex.item[0].km_inicial"
     aria-describedby="km begin"></div>
 
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Km Final</span>
-    <input type="number" class="form-control" id="kmFinalX"  placeholder="km final" 
-    v-model="storex.item.KM_final"
+    <input type="number" class="form-control" ref="updKMFinal"  placeholder="km final" 
+    v-model="storex.item[0].km_final"
     aria-describedby="km end"></div>
  
      <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Data inicial</span>
-    <input type="datetime-local" step="2" class="form-control" id="dataInicioX" 
-    v-model="storex.item.Data_inicial"
+    <input type="datetime-local" step="2" class="form-control" ref="updDInicial" 
+    v-model="storex.item[0].data_inicial"
      placeholder="Data inicial" aria-describedby="Data inicial" ></div>
 
          <div class="input-group input-group-sm mb-1">
      <span class="input-group-text" id="dailyrateHelp">Data final (esperada)</span>
-    <input type="datetime-local" step="2" class="form-control" id="fimdatex"  placeholder="Data Final esperada" v-model="storex.item.Data_esperada"
+    <input type="datetime-local" step="2" class="form-control" ref="updDFEsperada"  placeholder="Data Final esperada" 
+    v-model="storex.item[0].data_final_esperada"
     aria-describedby="Date end"></div>
 
          <div class="input-group input-group-sm mb-1">
-     <span class="input-group-text" id="dailyrateHelp">Final Date</span>
-    <input type="datetime-local" step="2" class="form-control" id="dataFinalX" placeholder="Data final realizada - Preenchida no retorno" v-model="storex.item.Data_final"
+     <span class="input-group-text" id="dailyrateHelp">Data Final (realizada)</span>
+    <input type="datetime-local" step="2" class="form-control" ref="updDFRealizada" placeholder="Data final realizada - Preenchida no retorno" v-model="storex.item[0].data_final_realizada"
     aria-describedby="final date"></div>
 
+    
     
     <div class="input-group input-group-sm mt-2 mb-2">
      <span class="input-group-text" id="dailyrateHelp">
@@ -708,7 +723,9 @@ __   ___  _____      __
     <input type="text" :value="ratex" size="10">
     </div>
 
-    
+            
+        </div>
+
         </div>
        </template>
 
@@ -769,9 +786,9 @@ __   ___  _____      __
     <template v-slot:content>
      <table-cp :dbdatas="basedata"
                :titles="titlesCP"
-               :dview="{visible:true, dataTarget:'modalView'}"
-               :ddel="{visible:false, dataTarget:'modalDel'}"
-               :dupd="{visible:false, dataTarget:'modalUpd'}"
+               :dview="{visible:true, dataTarget:'modalView',title:'Visualizar'}"
+               :ddel="{visible:false, dataTarget:'modalDel',title:'Finalizar Aluguel'}"
+               :dupd="{visible:false, dataTarget:'modalUpd',title:''}"
                :config="{title:'Operations', amountcolls: 1, refrow:'tem_cliente', refrowII:'tem_carro', refname:'nome', refnameII:'placa', visible:true, typer:'last', imagefield:'Nullable', funvisible:true, funtitle:'Finalizar aluguel',neoFunction:'api/aluguel'}"
               
      ></table-cp>

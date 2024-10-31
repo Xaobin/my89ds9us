@@ -626,9 +626,9 @@ __   ___  _____      __
     <template v-slot:content>
      <table-cp :dbdatas="carrosdata"
                :titles="titlesCP"
-               :dview="{visible:true, dataTarget:'modalView'}"
-               :ddel="{visible:true, dataTarget:'modalDel'}"
-               :dupd="{visible:true, dataTarget:'modalUpd'}"
+               :dview="{visible:true, dataTarget:'modalView',title:'Ver'}"
+               :ddel="{visible:true, dataTarget:'modalDel',title:'Excluir'}"
+               :dupd="{visible:true, dataTarget:'modalUpd',title:'Atualizar'}"
                
                :config="{title:'Operations', amountcolls: 1, refrow:'ref_modelo',refname:'nome', visible:true, typer:'last', imagefield:'Nullable',funvisible:false}"
               

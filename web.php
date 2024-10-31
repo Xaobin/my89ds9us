@@ -12,7 +12,7 @@ Route::get('/', function () {
     Route::get('/clientes', 'App\Http\Controllers\HomeController@clientes')->name('clientes');
     Route::get('/modelos', 'App\Http\Controllers\HomeController@modelos')->name('modelos');
     Route::get('/carros', 'App\Http\Controllers\HomeController@carros')->name('carros');
-    Route::get('/alugueis', 'App\Http\Controllers\HomeController@alugueis')->name('alugueis');
+    Route::get('/alugueis', 'App\Http\Controllers\HomeController@alugueis')->name('alugueis'); 
    */ 
   //});
 
@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::prefix('sys/v1')->group(function() {
   Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+ 
   Route::get('/example', 'App\Http\Controllers\HomeController@index')->name('example');
   Route::get('/marcas', 'App\Http\Controllers\HomeController@marcas')->name('marcas');
   Route::get('/clientes', 'App\Http\Controllers\HomeController@clientes')->name('clientes');

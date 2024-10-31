@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 
 class Carro extends Model{
@@ -24,8 +25,8 @@ class Carro extends Model{
         return $this->belongsTo('App\Models\Modelo','modelo_id','id');
     }
 // = = = = = = = = = = = = = = = = = 
-    public function refModelValues(){
-        $cons="select car_models.name as model, car_models.id as id from car_models";
+    public function refModeloValues(){
+        $cons="select modelos.nome as modelo, modelos.id as id from modelos";
         $dest=
         DB::select($cons);
         //echo gettype($dest); //return: array
