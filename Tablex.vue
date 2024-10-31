@@ -47,21 +47,28 @@ export default {
         /* . . . . . . . . . . . . . . . . . . . */
        setSpecificValue(itt){
             let idd=0;
-             console.log('zzzzzzzz');
-             console.log(itt.id); 
-             console.log(itt.ID); 
-             console.log(itt.Id); 
+            
+            leturlI="";
             if (itt.id!=undefined){ idd=itt.id; }
             if (itt.ID!=undefined){ idd=itt.ID; }
             if (itt.Id!=undefined){ idd=itt.Id; }
-            let uriI=this.config.neoFunction+"/"+idd; 
+            let urla=window.location.host;
+            if (urla.search('127')!=-1){
+                 urlI="http://127.0.0.1:8000/"+this.config.neoFunction+"/"+idd;
+            }
+            else{
+                 uriI=window.location.protocol+'://'+window.location.host+'/'+this.config.neoFunction+"/"+idd; 
+            }
+            console.log('aaaaaa');
+            console.log(urlI);
             let config = {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': this.token
                 }
             }
-            axios.get(uriI, config)
+            
+            axios.get(urlI, config)
                 .then(response => {
                     this.storex.setItem(response.data);
                    
@@ -75,6 +82,17 @@ export default {
     },
 
         computed: {
+             token() {
+
+                 let token = document.cookie.split(';').find(ind => {
+                    return ind.includes('token=')
+                })
+
+                token = token.split('=')[1]
+                token = 'Bearer ' + token
+
+                return token
+            },
             numberTitles(){
               let cc=0; let arr=[];
               let ttf =this.titles;
