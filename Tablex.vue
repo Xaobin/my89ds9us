@@ -10,38 +10,38 @@ export default {
           data() {
             return {
                 openmodal:'false',
-                mousein:'true',
-                jobj:{}
+                mousein:'true'
             }
         },
         methods:{
-            setStore(obj){
-                this.initConfig(obj);
+            setStore(obij){
+                this.initConfig(obij);
                let mdname=this.dview.dataTarget; 
                 document.getElementById(mdname).style.display='block';
 
               
             },
-         setStoreUpd(obj){
-                this.initConfig(obj);
+         setStoreUpd(obij){
+                this.initConfig(obij);
                let mdname=this.dupd.dataTarget; 
                 document.getElementById(mdname).style.display='block';
             },
-        setStoreDel(obj){
-                this.storex.setItem(obj);
+        setStoreDel(obij){
+                this.storex.setItem(obij);
                let mdname=this.ddel.dataTarget; 
                 document.getElementById(mdname).style.display='block';
             },
          /* . . . . . . . . . . . . . . . . . . . */
         initConfig(tobj){
            
-            let conff=this.config.neoFunction;
-               if ((conff!=null)||(conff!=undefined)||(conff!=NaN)){
-                                  
+            
+               if (this.config.neoFunction!=undefined){
+                    console.log('ooooooooooo');
+                    console.log(this.config.neoFunction);                
                     this.setSpecificValue(tobj);
                }
                else{
-                this.storex.setItem(obj);
+                this.storex.setItem(tobj);
                }
         },
         /* . . . . . . . . . . . . . . . . . . . */
@@ -233,11 +233,11 @@ keyValue = ID Brand_id, Image...
         </thead>
 
         <tbody>
-         <tr v-for="obj, keyx in filterDatasII" :key="keyx">
+         <tr v-for="objA, keyx in filterDatasII" :key="keyx">
           <td v-for="numb in numberTitles">
 
             <span v-for="tt, kk in titles" :key="kk">
-              <span v-for="value, keyValue in obj" :key="keyValue">
+              <span v-for="value, keyValue in objA" :key="keyValue">
                 <span v-if="((tt.ordershow==numb)&&(tt.visible==true)&&(tt.title==keyValue)&&(config.imagefield!=keyValue))">{{value}}</span>
 
                 <span v-if="((tt.ordershow==numb)&&(tt.visible==true)&&(tt.title==keyValue)&&(config.imagefield==keyValue))"><img :src="'/'+value" width="30" height="30"></span>
@@ -247,17 +247,18 @@ keyValue = ID Brand_id, Image...
           </td>
 
           <td v-if="config.visible==true"><span>
-            <a type="button" v-if="dview.visible"  @click="setStore(obj)"
-            class="btn btn-sm btn-outline-secondary">{{dview.title}}</a>
+            <a type="button" v-if="dview.visible"  @click="setStore(objA)"
+            class="btn btn-sm btn-outline-secondary"><span v-if="dview.title!=undefined">{{dview.title}}</span><span v-else>View</span></a>
 
-            <a type="button" v-if="dupd.visible"  @click="setStoreUpd(obj)"
-            class="btn btn-sm btn-outline-secondary">{{dupd.title}}</a>
+            <a type="button" v-if="dupd.visible"  @click="setStoreUpd(objA)"
+            class="btn btn-sm btn-outline-secondary"><span v-if="dupd.title!=undefined">{{dupd.title}}</span><span v-else>Upd</span></a>
 
-            <a type="button" v-if="config.funvisible"  @click="setStoreUpd(obj)"
+            <a type="button" v-if="config.funvisible"  @click="setStoreUpd(objA)"
             class="btn btn-sm btn-outline-danger">{{config.funtitle}}</a>
 
-            <a type="button" v-if="ddel.visible"  @click="setStoreDel(obj)"
-            class="btn btn-sm btn-outline-secondary">{{ddel.title}}</a></span>
+            <a type="button" v-if="ddel.visible"  @click="setStoreDel(objA)"
+            class="btn btn-sm btn-outline-secondary"><span v-if="ddel.title!=undefined">{{ddel.title}}</span><span v-else>Del</span></a>
+            </span>
           </td>
                         
         </tr>

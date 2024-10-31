@@ -481,9 +481,11 @@ LIST
     <template slot="content">
      <table-cp :dbdatas="marcasdata"
                :titles="titlesCP"
+
                :dview="{visible:true, dataTarget:'modalView',title:'Ver'}"
                :ddel="{visible:true, dataTarget:'modalDel',title:'Excluir'}"
                :dupd="{visible:true, dataTarget:'modalUpd',title:'Atualizar'}"
+
                :config="{title:'NotNullable', amountcolls: 1, refrow:'nullable',refname:'nullable',visible:true, imagefield:'Image',funvisible:false}"
      ></table-cp>
       </template>
