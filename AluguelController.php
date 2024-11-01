@@ -16,7 +16,8 @@ public function __construct(Aluguel $aluguelA) {
 /// * * * * * * * * * * * * * * * * * * * * * * * * * * 
 public function index(Request $request)
 {
-    $aluguelX=$this->filtrate($request,$this->aluguel,'temCliente','temCarro');
+    //$aluguelX=$this->filtrate($request,$this->aluguel,'temCliente','temCarro');
+    $aluguelX=$this->filterA0($request,$this->aluguel,'temCliente','temCarro');
     //$aluguelX=$this->defaultFilter($request,$this->aluguel);
     if (($aluguelX=="404")or($aluguelX==NULL)){
         return response()->json(['msg'=>'Recurso não localizado'],404);
@@ -152,14 +153,14 @@ private function defaultFilter($request,$objInstance){
     $strQuery=" WHERE ";
     $conty=0;
         /// . . . . . . .
-        if ($request->has('filter')){
+       
             $fill=str_replace("kkpkk","+",$request->filter);
             $myfilter=base64_decode($fill);
             
             //echo "--.-.-.-.-.-.-.".$_REQUEST['filter'];
-            $myfilter=str_replace("Modelo","modelos.nome",$myfilter);
-            $myfilter=str_replace("Placa","carros.placa",$myfilter);
-            $myfilter=str_replace("Cliente","clientes.nome",$myfilter);
+            $myfilter=str_replace("modelo","modelos.nome",$myfilter);
+            $myfilter=str_replace("placa","carros.placa",$myfilter);
+            $myfilter=str_replace("cliente","clientes.nome",$myfilter);
         // echo "Filter: ".$myfilter." ....";
             $contArroba=substr_count($myfilter,"@@");
             if ($contArroba>0){
@@ -194,24 +195,11 @@ private function defaultFilter($request,$objInstance){
             
             $valQuery=$objInstance->defaultQuery();
             $valQuery=$valQuery.$strQuery;
-            
+            echo $valQuery;
            // echo ">>".$valQuery."<<";
             $objInstance=$objInstance->execQuery($valQuery);
             return $objInstance;
            
-        } // . . . . End Filter 1
-        
-        
-        /// . . . . . . 
-        if ($request->has('getCarros')){
-            return $objInstance->getCarros();
-        }    
-        if ($request->has('getClientes')){
-            return $objInstance->getClientes();
-        }
-        $valQuery=$objInstance->defaultQuery();
-        $objInstance=$objInstance->execQuery($valQuery);
-        return $objInstance;
         
     } 
     
@@ -264,6 +252,7 @@ private function defaultFilter($request,$objInstance){
         filter=
         bmFtZT1lY29AQGRvb3JzPTRAQHNlYXRzPTRAQGFpcl9iYWc9MUBAYWJzPTE=
         */
+        //$varY=$aluguelX->getVehicle($aluguelX->carro_id);
         if ($request->has('filter')){
         $objInstance=$objInstance->with($ref_method)->with($ref_methodII);
         $myfilter=base64_decode($request->filter);
@@ -310,6 +299,27 @@ private function defaultFilter($request,$objInstance){
         $objInstance=$objInstance->get();
         return $objInstance;
     }
+    //==================================
+private function filterA0($request,$objInstance,$ref_method,$ref_methodII){
+    $field_like='nome';
+    
+    if ($request->has('filter')){
+        $this->defaultFilter($request,$objInstance);
+    } 
+
+    if ($request->has('getcarrosvalues')){
+        return $objInstance->getCarros();
+    }    
+    if ($request->has('getclientesvalues')){
+        return $objInstance->getClientes();
+    } 
+
+   //..No one filter, return all
+    $objInstance=$objInstance->with($ref_method)->with($ref_methodII);
+    $objInstance=$objInstance->get();
+    return $objInstance;
+}
+
     //==================================
     
 /// * * * * * * * * * * * * * * * * * * * * * * * * * * 
