@@ -132,7 +132,35 @@ public function update(Request $request, $myid){
      
  }  
 /// * * * * * * * * * * * * * * * * * * * * * * * * * * 
-
+    //==================================
+    private function filterA0($request,$objInstance,$ref_method,$ref_methodII){
+        $field_like='nome';
+         // ?filter=cGxhY2E9S09D ?filter=cGxhY2E9S09DQEBjbGllbnRlPU1hcmll ->placa=KOC@@cliente=Marie
+        if ($request->has('filter')){
+            //return $this->defaultFilter($request,$objInstance)->with($ref_method);
+            //"message": "Call to a member function with() on array",
+            $dfill=$this->defaultFilter($request,$objInstance);
+             //echo $dfill[0]->Placa;
+             $dfill[0]->tem_carro=['placa' =>$dfill[0]->Placa];
+             $dfill[0]->tem_cliente=['nome' =>$dfill[0]->Cliente];
+            return $dfill;
+        } 
+    
+        if ($request->has('getcarrosvalues')){
+            return $objInstance->getCarros();
+        }    
+        if ($request->has('getclientesvalues')){
+            return $objInstance->getClientes();
+        } 
+    
+       //..No one filter, return all
+        $objInstance=$objInstance->with($ref_method)->with($ref_methodII);
+        $objInstance=$objInstance->get();
+         //var_dump($objInstance);
+        //echo gettype($objInstance); return object
+        return $objInstance;
+    }
+    
 /// * * * * * * * * * * * * * * * * * * * * * * * * * * 
 // = = = = = = = = = = = = = = = = =
 // = = = = = = = = = = = = = = = = =
@@ -195,15 +223,18 @@ private function defaultFilter($request,$objInstance){
             
             $valQuery=$objInstance->defaultQuery();
             $valQuery=$valQuery.$strQuery;
-            echo $valQuery;
+            //echo $valQuery."<br>";
            // echo ">>".$valQuery."<<";
             $objInstance=$objInstance->execQuery($valQuery);
+            //echo json_encode($objInstance);
             return $objInstance;
            
         
     } 
-    
-    // = = = = = = = = = = = = = = = = =
+// = = = = = = = = = =Default filter ENDS
+// = = = = = = = = = = = = = = = = =
+// = = = = = = = = = = = = = = = = =
+// = = = = = = = = = = = = = = = = =
     private function compareVLike($valya,$fields_like){
         $vvv=explode("=",$valya); 
         $strQuery="";
@@ -299,26 +330,6 @@ private function defaultFilter($request,$objInstance){
         $objInstance=$objInstance->get();
         return $objInstance;
     }
-    //==================================
-private function filterA0($request,$objInstance,$ref_method,$ref_methodII){
-    $field_like='nome';
-    
-    if ($request->has('filter')){
-        $this->defaultFilter($request,$objInstance);
-    } 
-
-    if ($request->has('getcarrosvalues')){
-        return $objInstance->getCarros();
-    }    
-    if ($request->has('getclientesvalues')){
-        return $objInstance->getClientes();
-    } 
-
-   //..No one filter, return all
-    $objInstance=$objInstance->with($ref_method)->with($ref_methodII);
-    $objInstance=$objInstance->get();
-    return $objInstance;
-}
 
     //==================================
     

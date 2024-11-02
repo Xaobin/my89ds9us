@@ -89,10 +89,7 @@ AND modelos.marca_id=marcas.id;";
     }
     // = = = = = = = = = = = = = = = = = 
     public function defaultQuery(){
-        $cons="select alugueis.id as ID, cliente_id, carros.placa as Placa,modelos.nome as Modelo, clientes.nome as Cliente, carro_id, data_inicial, data_final_esperada, data_final_realizada, taxa_diaria, km_inicial, km_final, alugueis.updated_at, alugueis.created_at from alugueis 
-        JOIN carros ON (carros.id=carro_id) 
-        JOIN clientes ON (clientes.id=cliente_id) 
-        JOIN modelos ON (modelos.id=carros.modelo_id)";
+        $cons="select alugueis.id as id, cliente_id, carros.placa as Placa,modelos.nome as Modelo, clientes.nome as Cliente,carro_id, data_inicial, data_final_esperada, data_final_realizada, taxa_diaria, km_inicial, km_final, alugueis.updated_at, alugueis.created_at from alugueis JOIN carros ON (carros.id=carro_id) JOIN clientes ON (clientes.id=cliente_id) JOIN modelos ON (modelos.id=carros.modelo_id)";
         return $cons;
     }
     // = = = = = = = = = = = = = = = = = 
